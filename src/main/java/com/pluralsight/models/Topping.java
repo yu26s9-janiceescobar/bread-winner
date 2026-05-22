@@ -5,13 +5,13 @@ public abstract class Topping {
     public Topping(String name){
         this.name = name;
     }
-    public abstract double getPrice();
-    public abstract void setSize(Size size);
-    public String getName() {
+    
+    public abstract double getPrice(Size size);
+    public String getName(){
         return name;
     }
-
-    public void setName(String name) {
+    public void setName(String name){
         this.name = name;
     }
+
 }
