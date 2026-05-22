@@ -19,7 +19,7 @@ public class Soda implements OrderItem{
         return "Soda";
     }
     @Override
-    public String getDetail(){
+    public String getSodaType(){
         return selectedDrink;
     }
     @Override

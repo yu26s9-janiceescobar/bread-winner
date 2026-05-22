@@ -23,15 +23,18 @@ public class Sandwich implements OrderItem{
     public String getName(){
         return "Sandwich";
     }
-    @Override
-    public String getDetail(){
-        StringBuilder toppingDetail = new StringBuilder();
-        for (Topping t: toppings){
-            toppingDetail.append(" ").append(t.getName());
-        }
-        return toppingDetail.toString();
+    public ArrayList<Topping> getSandwichTopping(){
+        return toppings;
     }
-
+    public void addTopping(Topping topping){
+        toppings.add(topping);
+    }
+    public void setSize(Size size){
+        this.size = size;
+    }
+    public Size getSize(){
+        return size;
+    }
     public double calculatePrice(){
         double runningTotal = switch(size){
             case SMALL -> smallPrice;

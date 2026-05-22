@@ -1,7 +1,6 @@
 package com.pluralsight.models;
 
 public class PremiumTopping extends Topping {
-    private double price;
     private final double smallPrice;
     private final double mediumPrice;
     private final double largePrice;

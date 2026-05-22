@@ -17,8 +17,7 @@ public class Chip implements OrderItem {
     public String getName() {
         return "Chips";
     }
-    @Override
-    public String getDetail(){
+    public String getChipType(){
         return chipType;
     }
     public void setChipType(String chipType){
