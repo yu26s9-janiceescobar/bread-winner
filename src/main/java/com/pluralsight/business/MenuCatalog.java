@@ -11,6 +11,19 @@ public class MenuCatalog {
         this.menuItems = menuItems;
         this.priceEntries = priceEntries;
     }
+    public void addEntry(){
+        for (MenuItem m : menuItems) {
+            for (PriceEntry p : priceEntries) {
+                if (m.getCategory().equalsIgnoreCase(p.getCategory())){
+
+
+                }
+            }
+        }
+        }
+    }
+
+
 
 
 

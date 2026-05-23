@@ -11,67 +11,54 @@ import java.util.ArrayList;
 
 public class MenuCatalogFileManager {
     private final String menuItemsFile;
-    private final String menuItemPricesFile;
-    private final ArrayList<MenuItem> menuItems;
-    private final ArrayList<PriceEntry> priceEntries;
+    private final String menuPricesFile;
 
-    public MenuCatalogFileManager(String menuItemsFile, String menuItemPricesFile){
+    public MenuCatalogFileManager(String menuItemsFile, String menuPricesFile){
         this.menuItemsFile = menuItemsFile;
-        this.menuItemPricesFile = menuItemPricesFile;
-        menuItems = new ArrayList<>();
-        priceEntries = new ArrayList<>();
+        this.menuPricesFile = menuPricesFile;
     }
     public MenuCatalog getCatalog(){
-        
-    }
-
-    private ArrayList<MenuItem> getMenuItemsFromEncodedString(){
-        try{
-            FileReader fileReader = new FileReader(menuItemsFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            bufferedReader.readLine(); // skips first line.
-
-            String line;
-
-            while((line = bufferedReader.readLine()) != null){
-                if (!line.isBlank()) {
-                    String[] fileLine = line.split("\\|");
-                    String category = fileLine[0];
-                    String name =  fileLine[1];
-                    MenuItem menuItem = new MenuItem(category, name);
-                    menuItems.add(menuItem);
-                }
-            }
-            bufferedReader.close();
-        }catch(IOException e){
-            throw new RuntimeException("Trouble reading file.");
-        }
-        return menuItems;
-    }
-    private ArrayList<PriceEntry> getPriceEntriesFromEncodedString(){
-        try{
-            FileReader fileReader = new FileReader(menuItemPricesFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+        ArrayList<MenuItem> menuItems = new ArrayList<>();
+        ArrayList<PriceEntry> priceEntries = new ArrayList<>();
+        try (
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(menuItemsFile));
+                BufferedReader bufferedReader2 = new BufferedReader(new FileReader(menuPricesFile));
+            ) {
 
             bufferedReader.readLine(); // skips first line.
+            bufferedReader2.readLine();
 
-            String line;
+            String file1Line;
+            String file2Line;
 
-            while((line = bufferedReader.readLine()) != null){
-                if (!line.isBlank()) {
-                    String[] fileLine = line.split("\\|");
-                    String category = fileLine[0];
-                    String name =  fileLine[1];
-                    double price = Double.parseDouble(fileLine[2]);
-                    PriceEntry priceEntry = new PriceEntry(category, name, price);
-                    priceEntries.add(priceEntry);
+            while((file1Line = bufferedReader.readLine()) != null){
+                if (!file1Line.isBlank()) {
+                    menuItems.add(getMenuItemFromEncodedString(file1Line));
                 }
             }
-            bufferedReader.close();
+            while((file2Line = bufferedReader2.readLine()) != null){
+                if (!file2Line.isBlank()) {
+                    priceEntries.add(getPriceEntryFromEncodedString(file2Line));
+                }
+            }
         }catch(IOException e){
-            throw new RuntimeException("Trouble reading file.");
+            throw new RuntimeException("Trouble reading files.");
         }
-        return priceEntries;
+        return new MenuCatalog(menuItems, priceEntries);
+    }
+
+
+    private MenuItem getMenuItemFromEncodedString(String s){
+            String[] fileLine = s.split("\\|");
+            String category = fileLine[0];
+            String name =  fileLine[1];
+            return new MenuItem(category, name);
+    }
+    private PriceEntry getPriceEntryFromEncodedString(String s){
+            String[] fileLine = s.split("\\|");
+            String category = fileLine[0];
+            String name =  fileLine[1];
+            double price = Double.parseDouble(fileLine[2]);
+            return  new PriceEntry(category, name, price);
     }
 }
