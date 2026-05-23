@@ -2,27 +2,19 @@ package com.pluralsight.models;
 
 import java.util.ArrayList;
 
-public class Sandwich implements OrderItem{
+public class Sandwich extends OrderItem{
     private boolean isToasted;
     private Size size;
-    private double smallPrice;
-    private double mediumPrice;
-    private double largePrice;
+    private double price;
     private ArrayList<Topping> toppings;
 
-    public Sandwich(boolean isToasted, double smallPrice, double mediumPrice, double largePrice, Size size, ArrayList<Topping> toppings){
+    public Sandwich(String name, double price, boolean isToasted, Size size, ArrayList<Topping> toppings){
+        super(name);
         this.isToasted = isToasted;
         this.size = size;
         this.toppings = toppings;
     }
-    @Override
-    public double getPrice(){
-        return calculatePrice();
-    }
-    @Override
-    public String getName(){
-        return "Sandwich";
-    }
+
     public ArrayList<Topping> getSandwichTopping(){
         return toppings;
     }
@@ -35,16 +27,13 @@ public class Sandwich implements OrderItem{
     public Size getSize(){
         return size;
     }
+    @Override
+    public String getDetail(){
+        // returns toppings
+    }
+    @Override
     public double calculatePrice(){
-        double runningTotal = switch(size){
-            case SMALL -> smallPrice;
-            case MEDIUM -> mediumPrice;
-            case LARGE -> largePrice;
-        };
-        for (Topping t: toppings){
-            runningTotal += t.getPrice(size);
-        }
-        return runningTotal;
+
     }
     public void setToasted(boolean isToasted){
         this.isToasted = isToasted;

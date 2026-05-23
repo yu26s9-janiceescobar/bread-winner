@@ -4,12 +4,28 @@ import java.util.ArrayList;
 
 // Category|Name
 public class MenuItem {
-    private ArrayList<String> menuItems;
+    private String category;
+    private String name;
 
-    public MenuItem(ArrayList<String> menuItems){
-        this.menuItems = menuItems;
+    public MenuItem(String category, String name){
+        this.category = category;
+        this.name = name;
+        
     }
 
+    public String getCategory() {
+        return category;
+    }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

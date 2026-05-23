@@ -1,23 +1,20 @@
 package com.pluralsight.models;
 
-public class Chip implements OrderItem {
-    private final double price;
+public class Chip extends OrderItem {
+    private String name;
+    private double price;
     private String chipType;
-    public Chip( double price, String chipType){
+    public Chip(String name, double price, String chipType){
+        super(name);
         this.price = price;
         this.chipType = chipType;
     }
-
     @Override
-    public double getPrice(){
+    public double calculatePrice(){
         return price;
     }
-
     @Override
-    public String getName() {
-        return "Chips";
-    }
-    public String getChipType(){
+    public String getDetail(){
         return chipType;
     }
     public void setChipType(String chipType){

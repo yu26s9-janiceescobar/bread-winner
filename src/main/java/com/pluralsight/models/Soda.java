@@ -1,37 +1,27 @@
 package com.pluralsight.models;
 
-public class Soda implements OrderItem{
-    private final double smallPrice;
-    private final double mediumPrice;
-    private final double largePrice;
-    private String selectedDrink;
+public class Soda extends OrderItem{
+    private final double price;
+    private String drinkType;
     private Size size;
 
-    public Soda(double smallPrice, double mediumPrice, double largePrice,String selectedDrink, Size size){
-        this.smallPrice = smallPrice;
-        this.mediumPrice = mediumPrice;
-        this.largePrice = largePrice;
-        this.selectedDrink = selectedDrink;
+    public Soda(String name, double price, String drinkType, Size size){
+        super(name);
+        this.price = price;
+        this.drinkType = drinkType;
         this.size = size;
     }
+
     @Override
-    public String getName(){
-        return "Soda";
+    public double calculatePrice(){
+        return price;
     }
     @Override
-    public String getSodaType(){
-        return selectedDrink;
-    }
-    @Override
-    public double getPrice(){
-        return switch(size){
-            case SMALL -> smallPrice;
-            case MEDIUM -> mediumPrice;
-            case LARGE -> largePrice;
-        };
+    public String getDetail(){
+        return drinkType;
     }
     public void setSelectedDrink(String selectedDrink){
-        this.selectedDrink = selectedDrink;
+        this.drinkType = selectedDrink;
     }
 
     public void setSize(Size size){
