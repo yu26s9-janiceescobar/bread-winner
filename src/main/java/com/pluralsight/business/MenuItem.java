@@ -1,7 +1,15 @@
 package com.pluralsight.business;
+
+import java.util.ArrayList;
+
 // Category|Name
 public class MenuItem {
-    public MenuItem(){
+    private ArrayList<String> menuItems;
 
+    public MenuItem(ArrayList<String> menuItems){
+        this.menuItems = menuItems;
     }
+
+
+
 }
