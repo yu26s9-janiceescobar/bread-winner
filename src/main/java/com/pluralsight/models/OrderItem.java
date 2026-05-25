@@ -6,7 +6,6 @@ public abstract class OrderItem {
     public OrderItem(String name){
         this.name = name;
     }
-    public abstract String getDetail();
     public abstract double calculatePrice();
 
     public String getName() {

@@ -16,12 +16,14 @@ public class Soda extends OrderItem{
     public double calculatePrice(){
         return price;
     }
-    @Override
-    public String getDetail(){
+    
+
+    public String getDrinkType() {
         return drinkType;
     }
-    public void setSelectedDrink(String selectedDrink){
-        this.drinkType = selectedDrink;
+
+    public void setDrinkType(String drinkType) {
+        this.drinkType = drinkType;
     }
 
     public void setSize(String size){

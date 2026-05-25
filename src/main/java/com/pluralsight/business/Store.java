@@ -1,23 +1,26 @@
 package com.pluralsight.business;
 
-import java.awt.*;
-import java.util.ArrayList;
 
 public class Store {
     private String name;
     private String address;
     private String phoneNumber;
-    private ArrayList<MenuItem> menuCatalog;
+    private MenuCatalog menuCatalog;
 
     public Store(String name, String address, String phoneNumber){
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        menuCatalog = new ArrayList<>();
     }
-    public void addMenuEntry(MenuItem menuItem){
-        menuCatalog.add(menuItem);
+    
+    public void addMenuCatalog(MenuCatalog menuCatalog) {
+        this.menuCatalog = menuCatalog;
     }
+
+    public MenuCatalog getMenuCatalog() {
+        return menuCatalog;
+    }
+
     public String getName() {
         return name;
     }

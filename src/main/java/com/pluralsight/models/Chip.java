@@ -13,8 +13,8 @@ public class Chip extends OrderItem {
     public double calculatePrice(){
         return price;
     }
-    @Override
-    public String getDetail(){
+
+    public String getChipType() {
         return chipType;
     }
     public void setChipType(String chipType){

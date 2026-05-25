@@ -1,50 +1,36 @@
 package com.pluralsight.business;
-
-import com.pluralsight.models.ItemName;
-import com.pluralsight.models.OrderItem;
-import com.pluralsight.models.PriceEntry;
+import com.pluralsight.models.MenuOption;
 
 import java.util.ArrayList;
 
-
 public class MenuCatalog {
     private String name;
-    private ArrayList<OrderItem> menuCatalog;
+    private ArrayList<MenuOption> menuCatalog;
 
     public MenuCatalog(String name){
         this.name = name;
-
+        menuCatalog = new ArrayList<>();
+    }
+    public void addMenuItem(MenuOption menuOption){
+        menuCatalog.add(menuOption);
+    }
+    public void removeMenuItem(MenuOption menuOption){
+        menuCatalog.remove(menuOption);
+    }
+    public String getName() {
+        return name;
     }
 
-    public void addEntry(String category, String name, String size, double price){
-
+    public void setName(String name) {
+        this.name = name;
     }
-//    public List<MenuItem> getItemsByCategory(String category){
-//        return menuItems.stream()
-//                .filter(menuItem -> menuItem.getCategory().equalsIgnoreCase(category))
-//                .collect(Collectors.toCollection(ArrayList::new));
-//    }
-//
-//    public List<PriceEntry> getPricesByCategory(String category){
-//        return priceEntries.stream()
-//                .filter(priceEntry -> priceEntry.getCategory().equalsIgnoreCase(category))
-//                .collect(Collectors.toCollection(ArrayList::new));
-//    }
-//    public List<PriceEntry> getPricesByCategory(String category, String size){
-//        return priceEntries.stream()
-//                .filter(priceEntry ->
-//                        priceEntry.getCategory().equalsIgnoreCase(category) && priceEntry.getSize().equalsIgnoreCase(size))
-//                .collect(Collectors.toCollection(ArrayList::new));
-//    }
 
+    public ArrayList<MenuOption> getMenuCatalog() {
+        return menuCatalog;
+    }
 
-    public double getPriceBySize(ItemName menuItem, String size){
-        for (PriceEntry p: priceEntries){
-            if (p.getCategory().equalsIgnoreCase(menuItem.getCategory()) && p.getSize().equalsIgnoreCase(size)){
-               return p.getPrice();
-            }
-        }
-        return 0;
+    public void setMenuCatalog(ArrayList<MenuOption> menuCatalog) {
+        this.menuCatalog = menuCatalog;
     }
 
 

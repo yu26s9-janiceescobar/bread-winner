@@ -9,8 +9,9 @@ public class Sandwich extends OrderItem{
     private double price;
     private ArrayList<Topping> toppings;
 
-    public Sandwich(String name, ItemName bread, List<ItemName> meats, List<ItemName> cheeses, List<ItemName> toppings, List<ItemName> sauces){
+    public Sandwich(String name, String size, MenuItem bread){
         super(name);
+        toppings = new ArrayList<>();
     }
 
     public ArrayList<Topping> getSandwichTopping(){
@@ -25,14 +26,14 @@ public class Sandwich extends OrderItem{
     public String getSize(){
         return size;
     }
-    @Override
-    public String getDetail(){
-        // returns toppings
-        return "";
-    }
+
     @Override
     public double calculatePrice(){
-        return 0;
+        double total = 0;
+        for (Topping topping: toppings){
+            total += topping.getPrice(size);
+        }
+        return total;
     }
     public void setToasted(boolean isToasted){
         this.isToasted = isToasted;
