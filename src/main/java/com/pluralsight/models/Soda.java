@@ -3,9 +3,9 @@ package com.pluralsight.models;
 public class Soda extends OrderItem{
     private final double price;
     private String drinkType;
-    private Size size;
+    private String size;
 
-    public Soda(String name, double price, String drinkType, Size size){
+    public Soda(String name, double price, String drinkType, String size){
         super(name);
         this.price = price;
         this.drinkType = drinkType;
@@ -24,10 +24,10 @@ public class Soda extends OrderItem{
         this.drinkType = selectedDrink;
     }
 
-    public void setSize(Size size){
+    public void setSize(String size){
         this.size = size;
     }
-    public Size getSize(){
+    public String getSize(){
         return size;
     }
 }

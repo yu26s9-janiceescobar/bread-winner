@@ -1,13 +1,13 @@
-package com.pluralsight.business;
-// category|size|price
-public class PriceEntry {
+package com.pluralsight.models;
+
+// Category|Name
+public class MenuItem {
     private String category;
     private String name;
-    private double price;
-    public PriceEntry(String category, String name, double price){
+
+    public MenuItem(String category, String name){
         this.category = category;
         this.name = name;
-        this.price = price;
 
     }
 
@@ -26,12 +26,10 @@ public class PriceEntry {
     public void setName(String name) {
         this.name = name;
     }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    @Override
+    public String toString(){
+        return String.format("""
+                Category: %s
+                Name: %s""", category, name );
     }
 }

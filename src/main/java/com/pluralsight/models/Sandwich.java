@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Sandwich extends OrderItem{
     private boolean isToasted;
-    private Size size;
+    private String size;
     private double price;
     private ArrayList<Topping> toppings;
 
-    public Sandwich(String name, double price, boolean isToasted, Size size, ArrayList<Topping> toppings){
+    public Sandwich(String name, double price, boolean isToasted, String size, ArrayList<Topping> toppings){
         super(name);
         this.isToasted = isToasted;
         this.size = size;
@@ -21,10 +21,10 @@ public class Sandwich extends OrderItem{
     public void addTopping(Topping topping){
         toppings.add(topping);
     }
-    public void setSize(Size size){
+    public void setSize(String size){
         this.size = size;
     }
-    public Size getSize(){
+    public String getSize(){
         return size;
     }
     @Override

@@ -6,7 +6,7 @@ public class RegularTopping extends Topping{
     }
 
     @Override
-    public double getPrice(Size size){
+    public double getPrice(String size){
         return 0;
     }
 }

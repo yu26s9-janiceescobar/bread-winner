@@ -1,9 +1,8 @@
 package com.pluralsight.data;
 
 import com.pluralsight.business.MenuCatalog;
-import com.pluralsight.business.MenuItem;
-import com.pluralsight.business.PriceEntry;
-
+import com.pluralsight.models.MenuItem;
+import com.pluralsight.models.PriceEntry;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
