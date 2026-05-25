@@ -9,8 +9,28 @@ public class Console {
     }
 
     public String promptForString(String prompt){
-        System.out.println(prompt);
+        System.out.print(prompt);
         return scanner.nextLine().strip();
     }
+    public int promptForInt(String prompt){
+        while(true) {
+            try {
+                String userInput = promptForString(prompt);
+                return Integer.parseInt(userInput);
+            }catch(NumberFormatException e){
+                System.out.println("Must enter a number.");
+            }
+        }
+    }
+    public int promptForIntRange(String prompt, int min, int max){
+        while(true){
+            int parseIntInput = promptForInt(prompt);
+            if (parseIntInput >= min && parseIntInput <= max){
+                return parseIntInput;
+            }
+            System.out.println("Must Enter an option above.");
+        }
+    }
+
 
 }

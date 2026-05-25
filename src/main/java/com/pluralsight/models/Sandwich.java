@@ -30,10 +30,11 @@ public class Sandwich extends OrderItem{
     @Override
     public String getDetail(){
         // returns toppings
+        return "";
     }
     @Override
     public double calculatePrice(){
-
+        return 0;
     }
     public void setToasted(boolean isToasted){
         this.isToasted = isToasted;

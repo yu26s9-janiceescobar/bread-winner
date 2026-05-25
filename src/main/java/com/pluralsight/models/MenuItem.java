@@ -26,10 +26,5 @@ public class MenuItem {
     public void setName(String name) {
         this.name = name;
     }
-    @Override
-    public String toString(){
-        return String.format("""
-                Category: %s
-                Name: %s""", category, name );
-    }
+
 }

@@ -8,7 +8,7 @@ public abstract class OrderItem {
     }
     public abstract String getDetail();
     public abstract double calculatePrice();
-    
+
     public String getName() {
         return name;
     }
@@ -16,8 +16,6 @@ public abstract class OrderItem {
     public void setName(String name) {
         this.name = name;
     }
-
-
 
 
 }
