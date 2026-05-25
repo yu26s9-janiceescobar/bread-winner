@@ -1,5 +1,8 @@
 package com.pluralsight.business;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Store {
     private String name;
@@ -11,8 +14,9 @@ public class Store {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
+
     }
-    
+
     public void addMenuCatalog(MenuCatalog menuCatalog) {
         this.menuCatalog = menuCatalog;
     }

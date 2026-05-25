@@ -1,13 +1,11 @@
 package com.pluralsight.models;
 
-public class MenuOption {
+public class PriceEntry {
     private String category;
-    private String name;
     private String size;
     private double price;
-    public MenuOption(String category, String name, String size, double price){
+    public PriceEntry(String category, String size, double price){
         this.category = category;
-        this.name = name;
         this.size = size;
         this.price = price;
     }
@@ -18,14 +16,6 @@ public class MenuOption {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSize() {

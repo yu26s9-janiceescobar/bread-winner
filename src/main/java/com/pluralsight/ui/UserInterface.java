@@ -1,9 +1,6 @@
 package com.pluralsight.ui;
-
-import com.pluralsight.business.MenuCatalog;
 import com.pluralsight.business.Store;
 import com.pluralsight.models.*;
-
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,6 +16,7 @@ public class UserInterface {
 
     public void display(Store store, Console console) {
         init(store, console);
+
         int option;
         do {
             System.out.println("""
@@ -52,7 +50,7 @@ public class UserInterface {
                     System.out.println("Cancelling Order...");
                     break;
                 case 1:
-                    //processAddSandwich();
+                    processAddSandwich();
                     break;
                 case 2:
                     // processAddDrink();
@@ -67,6 +65,9 @@ public class UserInterface {
         } while (option != 0);
     }
 
-   
+
+
+
+
 
 }

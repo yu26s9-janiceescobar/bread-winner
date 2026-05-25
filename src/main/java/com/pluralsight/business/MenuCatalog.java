@@ -1,36 +1,24 @@
 package com.pluralsight.business;
-import com.pluralsight.models.MenuOption;
+import com.pluralsight.models.MenuItem;
+import com.pluralsight.models.PriceEntry;
 
 import java.util.ArrayList;
 
 public class MenuCatalog {
-    private String name;
-    private ArrayList<MenuOption> menuCatalog;
+    private final ArrayList<MenuItem> menuItems;
+    private final ArrayList<PriceEntry> priceEntries;
 
-    public MenuCatalog(String name){
-        this.name = name;
-        menuCatalog = new ArrayList<>();
-    }
-    public void addMenuItem(MenuOption menuOption){
-        menuCatalog.add(menuOption);
-    }
-    public void removeMenuItem(MenuOption menuOption){
-        menuCatalog.remove(menuOption);
-    }
-    public String getName() {
-        return name;
+    public MenuCatalog(ArrayList<MenuItem> menuItems, ArrayList<PriceEntry> priceEntries){
+        this.menuItems = menuItems;
+        this.priceEntries = priceEntries;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public ArrayList<MenuItem> getMenuItems() {
+        return menuItems;
     }
 
-    public ArrayList<MenuOption> getMenuCatalog() {
-        return menuCatalog;
-    }
-
-    public void setMenuCatalog(ArrayList<MenuOption> menuCatalog) {
-        this.menuCatalog = menuCatalog;
+    public ArrayList<PriceEntry> getPriceEntries() {
+        return priceEntries;
     }
 
 

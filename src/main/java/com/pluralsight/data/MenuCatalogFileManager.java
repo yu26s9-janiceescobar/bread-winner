@@ -1,7 +1,7 @@
 package com.pluralsight.data;
-
 import com.pluralsight.business.MenuCatalog;
-import com.pluralsight.models.MenuOption;
+import com.pluralsight.models.MenuItem;
+import com.pluralsight.models.PriceEntry;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,17 +17,15 @@ public class MenuCatalogFileManager {
         this.menuPricesFile = menuPricesFile;
     }
     public MenuCatalog getMenuCatalog(){
-        MenuCatalog menuCatalog;
-        ArrayList<String[]> menuRow = new ArrayList<>();
-        ArrayList<String[]> priceRow = new ArrayList<>();
+        ArrayList<MenuItem> menuItems = new ArrayList<>();
+        ArrayList<PriceEntry> priceEntries = new ArrayList<>();
         try (
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(menuItemsFile));
                 BufferedReader bufferedReader2 = new BufferedReader(new FileReader(menuPricesFile));
 
             ) {
-            String[] menuCatalogInfo = bufferedReader.readLine().split("\\|");
-            menuCatalog = new MenuCatalog(menuCatalogInfo[0]);
-            bufferedReader2.readLine();
+            bufferedReader.readLine(); // skip first line
+            bufferedReader2.readLine(); // skip first line
 
 
             String file1Line;
@@ -35,34 +33,34 @@ public class MenuCatalogFileManager {
 
             while((file1Line = bufferedReader.readLine()) != null){
                 if (!file1Line.isBlank()) {
-                    menuRow.add(file1Line.split("\\|"));
+                    menuItems.add(makeMenuItemFromEncodedString(file1Line));
                 }
             }
             while((file2Line = bufferedReader2.readLine()) != null){
                 if (!file2Line.isBlank()) {
-                    priceRow.add(file2Line.split("\\|"));
+                    priceEntries.add(makePriceEntryFromEncodedString(file2Line));
                 }
             }
-
-            for (String[] item: menuRow){
-                for(String[] price: priceRow){
-                    String category = item[0];
-                    String name = item[1];
-                    if (item[0].equalsIgnoreCase(price[0])){
-                        menuCatalog.addMenuItem(new MenuOption(
-                                category,
-                                name,
-                                price[1],
-                                Double.parseDouble(price[2])));
-                    }
-                }
-            }
+            return new MenuCatalog(menuItems, priceEntries);
         }catch(IOException e){
             throw new RuntimeException("Trouble reading files.");
         }
-        return menuCatalog;
     }
 
+    private MenuItem makeMenuItemFromEncodedString(String s){
+        String[] line = s.split("\\|");
+        String category = line[0];
+        String name = line[1];
+
+        return new MenuItem(category, name);
+    }
+    private PriceEntry makePriceEntryFromEncodedString(String s){
+        String[] line = s.split("\\|");
+        String category = line[0];
+        String size = line[1];
+        double price = Double.parseDouble(line[2]);
+        return new PriceEntry(category, size, price);
+    }
 
 
 }
