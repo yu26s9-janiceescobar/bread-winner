@@ -64,65 +64,67 @@ public class UserInterface {
             }
         }while(option != 0);
     }
-    private void displayListOfMenuItems(List<MenuItem> menuItems, String header){
-        System.out.println(header);
+    private void displayListOfMenuItems(List<ItemName> menuItems){
         AtomicInteger index = new AtomicInteger(1);
         menuItems.forEach(menuItem ->
                 System.out.printf("[%d] %s%n",index.getAndIncrement(), menuItem.getName()));
     }
-    private void displayPricesBySize(List<PriceEntry> priceEntries, String header){
-        System.out.println(header);
+    private void displayPricesBySize(List<PriceEntry> priceEntries){
         AtomicInteger index = new AtomicInteger(1);
         priceEntries.forEach(priceEntry ->
                 System.out.printf("[%d] %s === $%.2f %n",index.getAndIncrement(), priceEntry.getSize(), priceEntry.getPrice()));
     }
 
     private void processAddSandwich(){
-        List<MenuItem> selectedMeats = new ArrayList<>();
-        List<MenuItem> selectedCheeses = new ArrayList<>();
-        List<MenuItem> selectedRegToppings = new ArrayList<>();
-        List<MenuItem> selectedSauces = new ArrayList<>();
+        List<ItemName> selectedMeats = new ArrayList<>();
+        List<ItemName> selectedCheeses = new ArrayList<>();
+        List<ItemName> selectedRegToppings = new ArrayList<>();
+        List<ItemName> selectedSauces = new ArrayList<>();
 
         List<PriceEntry> sandwichPrices = menuCatalog.getPricesByCategory("SANDWICH");
-        displayPricesBySize(sandwichPrices, "Sandwich Size Options");
+        displayPricesBySize(sandwichPrices);
         int sandwichChoice = console.promptForIntRange("> ", 1, sandwichPrices.size());
         PriceEntry selectedSandwich = sandwichPrices.get(sandwichChoice - 1);
 
-        List<MenuItem> breads = menuCatalog.getItemsByCategory("BREAD");
-        displayListOfMenuItems( breads, "Types of Bread");
+        List<ItemName> breads = menuCatalog.getItemsByCategory("BREAD");
+        displayListOfMenuItems( breads);
         int breadChoice = console.promptForIntRange("> ", 1, breads.size());
-        MenuItem selectedBread = breads.get(breadChoice - 1);
-
-
-
-
-        List<MenuItem> cheese = menuCatalog.getItemsByCategory("CHEESE");
-        displayListOfMenuItems(cheese, "Types of Cheese");
-        int cheeseChoice = console.promptForIntRange("> ", 1, cheese.size());
-        MenuItem selectedCheese = cheese.get(cheeseChoice - 1);
-        double cheesePrices = menuCatalog.getPriceBySize(selectedCheese, selectedSandwich.getSize());
+        ItemName selectedBread = breads.get(breadChoice - 1);
 
 
         OrderItem sandwich = new Sandwich("Sandwich", selectedBread,selectedMeats , selectedCheeses, selectedRegToppings, selectedSauces);
     }
 
-    private List<MenuItem> processAddMeats(String size){
-
-        boolean extraMeat;
+    private List<ItemName> processAddCheese(String size){
         do {
-            List<MenuItem> availableMeats = menuCatalog.getItemsByCategory("MEATS");
-            displayListOfMenuItems(availableMeats, "Types of Meat");
+            System.out.println("Select one of the following Cheeses: ");
+            List<ItemName> availableCheeseOptions = menuCatalog.getItemsByCategory("CHEESE");
+            displayListOfMenuItems(availableCheeseOptions);
+            int cheeseChoice = console.promptForIntRange("> ", 1, availableCheeseOptions.size());
+            ItemName selectedCheese = availableCheeseOptions.get(cheeseChoice - 1);
+            availableCheeseOptions.remove(selectedCheese);
+//            double cheesePrices = menuCatalog.getPriceBySize(selectedCheese, size);
 
-            int meatChoice = console.promptForIntRange("> ", 1, availableMeats.size());
-            MenuItem selectedMeat = availableMeats.get(meatChoice - 1);
-
-            double meatPrice = menuCatalog.getPriceBySize(selectedMeat, size);
-            extraMeat = console.promptForYesNo("Would you like to Extra Meat? [Y] Yes [N] No");
-            if (extraMeat){
-                menuCatalog.getPriceBySize()
+            System.out.println("Would you like extra " + selectedCheese.getName() + "?");
+            List<ItemName> extraCheeseOptions = menuCatalog.getItemsByCategory("EXTRA_CHEESE");
+            boolean addExtraCheese = console.promptForYesNo("[Y] Yes [N] No");
+            if (addExtraCheese){
+                ItemName extraCheeseSelected = menuCatalog.getItemsByCategory("EXTRA_CHEESE");
             }
-
+                menuCatalog.getPricesByCategory("EXTRA_CHEESE", size);
+            }
         }while()
+
     }
+    private List<ItemName> processAddMeat(String size){
+
+        List<ItemName> availableMeats = menuCatalog.getItemsByCategory("MEATS");
+        displayListOfMenuItems(availableMeats);
+
+        int meatChoice = console.promptForIntRange("> ", 1, availableMeats.size());
+        ItemName selectedMeat = availableMeats.get(meatChoice - 1);
+
+        double meatPrice = menuCatalog.getPriceBySize(selectedMeat, size);
+
 
 }

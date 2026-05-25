@@ -1,7 +1,7 @@
 package com.pluralsight.data;
 
-import com.pluralsight.business.MenuCatalog;
-import com.pluralsight.models.MenuItem;
+import com.pluralsight.business.Store;
+import com.pluralsight.models.ItemName;
 import com.pluralsight.models.PriceEntry;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,23 +16,27 @@ public class MenuCatalogFileManager {
         this.menuItemsFile = menuItemsFile;
         this.menuPricesFile = menuPricesFile;
     }
-    public MenuCatalog getCatalog(){
-        ArrayList<MenuItem> menuItems = new ArrayList<>();
+    public Store createStore(){
+        Store store;
+
+        ArrayList<ItemName> itemName = new ArrayList<>();
         ArrayList<PriceEntry> priceEntries = new ArrayList<>();
         try (
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(menuItemsFile));
                 BufferedReader bufferedReader2 = new BufferedReader(new FileReader(menuPricesFile));
+
             ) {
 
             bufferedReader.readLine(); // skips first line.
             bufferedReader2.readLine();
+
 
             String file1Line;
             String file2Line;
 
             while((file1Line = bufferedReader.readLine()) != null){
                 if (!file1Line.isBlank()) {
-                    menuItems.add(getMenuItemFromEncodedString(file1Line));
+                    itemName.add(getMenuItemFromEncodedString(file1Line));
                 }
             }
             while((file2Line = bufferedReader2.readLine()) != null){
@@ -43,15 +47,21 @@ public class MenuCatalogFileManager {
         }catch(IOException e){
             throw new RuntimeException("Trouble reading files.");
         }
-        return new MenuCatalog(menuItems, priceEntries);
+        for (ItemName i: itemName){
+            for (PriceEntry priceEntry: priceEntries){
+                if (i.getCategory().equalsIgnoreCase(priceEntry.getCategory()))
+                    menuCatalog.addEntry(i.getCategory(), i.getName(), priceEntry.getSize(), priceEntry.getPrice());
+            }
+        }
+        return menuCatalog;
     }
 
-
-    private MenuItem getMenuItemFromEncodedString(String s){
+    private
+    private ItemName getMenuItemFromEncodedString(String s){
             String[] fileLine = s.split("\\|");
             String category = fileLine[0];
             String name =  fileLine[1];
-            return new MenuItem(category, name);
+            return new ItemName(category, name);
     }
     private PriceEntry getPriceEntryFromEncodedString(String s){
             String[] fileLine = s.split("\\|");

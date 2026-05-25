@@ -9,7 +9,7 @@ public class Sandwich extends OrderItem{
     private double price;
     private ArrayList<Topping> toppings;
 
-    public Sandwich(String name, MenuItem bread, List<MenuItem> meats, List<MenuItem> cheeses, List<MenuItem> toppings, List<MenuItem> sauces){
+    public Sandwich(String name, ItemName bread, List<ItemName> meats, List<ItemName> cheeses, List<ItemName> toppings, List<ItemName> sauces){
         super(name);
     }
 
