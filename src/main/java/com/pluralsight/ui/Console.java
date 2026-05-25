@@ -22,6 +22,24 @@ public class Console {
             }
         }
     }
+
+    public String promptForStringOptions(String prompt, String ...options){
+        while(true) {
+            String userInput = promptForString(prompt);
+            for (String option : options) {
+                if (userInput.equalsIgnoreCase(option)) {
+                    return option;
+                }
+            }
+            System.out.println("Must Enter a Valid Option.");
+        }
+
+    }
+    public boolean promptForYesNo(String prompt){
+        String userInput = promptForStringOptions(prompt, "y", "n");
+        return userInput.equalsIgnoreCase("y");
+
+    }
     public int promptForIntRange(String prompt, int min, int max){
         while(true){
             int parseIntInput = promptForInt(prompt);

@@ -1,6 +1,7 @@
 package com.pluralsight.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Sandwich extends OrderItem{
     private boolean isToasted;
@@ -8,11 +9,8 @@ public class Sandwich extends OrderItem{
     private double price;
     private ArrayList<Topping> toppings;
 
-    public Sandwich(String name, double price, boolean isToasted, String size, ArrayList<Topping> toppings){
+    public Sandwich(String name, MenuItem bread, List<MenuItem> meats, List<MenuItem> cheeses, List<MenuItem> toppings, List<MenuItem> sauces){
         super(name);
-        this.isToasted = isToasted;
-        this.size = size;
-        this.toppings = toppings;
     }
 
     public ArrayList<Topping> getSandwichTopping(){
