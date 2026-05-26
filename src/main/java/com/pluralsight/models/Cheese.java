@@ -17,14 +17,14 @@ public class Cheese extends Topping{
     public double getPrice(SandwichSize size){
         return (isExtra) ? getExtraPrice(size) : getBasePrice(size);
     }
-    public double getExtraPrice(SandwichSize size){
+    public static double getExtraPrice(SandwichSize size){
         return switch(size){
             case SMALL -> 0.30;
             case MEDIUM -> 0.60;
             case LARGE -> 0.90;
         };
     }
-    public double getBasePrice(SandwichSize size){
+    public static double getBasePrice(SandwichSize size){
         return switch(size){
             case SMALL -> .75;
             case MEDIUM -> 1.50;

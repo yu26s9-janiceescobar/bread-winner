@@ -1,8 +1,13 @@
 package com.pluralsight.models;
 
 public enum SandwichSize{
-        SMALL(4,5.5), MEDIUM(8, 7.0), LARGE(12, 8.5);
+
+        SMALL(4,5.5),
+        MEDIUM(8, 7.0),
+        LARGE(12, 8.5);
+
         private final double basePrice;
+
         private final int inches;
          SandwichSize(int inches, double basePrice){
              this.inches = inches;

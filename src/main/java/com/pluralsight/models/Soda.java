@@ -2,21 +2,16 @@ package com.pluralsight.models;
 
 public class Soda extends OrderItem {
     private String drinkType;
-    private String size;
+    private SodaSize size;
 
-    public Soda(String name, String drinkType, String size){
+    public Soda(String name, String drinkType, SodaSize size){
         super(name);
         this.drinkType = drinkType;
         this.size = size;
     }
     @Override
     public double getPrice(){
-        return switch(size){
-            case "small" -> 2.0;
-            case "medium" -> 2.5;
-            case "large" -> 3.0;
-            default -> 0;
-        };
+        return size.getPrice();
     }
     public String getDrinkType() {
         return drinkType;
@@ -26,10 +21,10 @@ public class Soda extends OrderItem {
         this.drinkType = drinkType;
     }
 
-    public void setSize(String size){
+    public void setSize(SodaSize size){
         this.size = size;
     }
-    public String getSize(){
+    public SodaSize getSize(){
         return size;
     }
 }

@@ -15,7 +15,7 @@ public class Sandwich extends OrderItem {
     }
     @Override
     public double getPrice(){
-        double runningTotal = 0;
+        double runningTotal = size.getBasePrice();
         for (Topping topping: toppings){
             runningTotal += topping.getPrice(size);
         }
