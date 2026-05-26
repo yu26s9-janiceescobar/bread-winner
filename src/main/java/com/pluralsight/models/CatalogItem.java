@@ -1,10 +1,10 @@
 package com.pluralsight.models;
 
-public class MenuItem {
+public class CatalogItem {
     private String category;
     private String name;
 
-    public MenuItem(String category, String name){
+    public CatalogItem(String category, String name){
         this.category = category;
         this.name = name;
     }

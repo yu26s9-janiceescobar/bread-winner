@@ -1,17 +1,17 @@
 package com.pluralsight.models;
 
+import com.pluralsight.business.Catalog;
+
 public class Chip extends OrderItem {
     private String name;
-    private final double price;
     private String chipType;
-    public Chip(String name, double price, String chipType){
+    public Chip(String name, String chipType){
         super(name);
-        this.price = price;
         this.chipType = chipType;
     }
     @Override
-    public double calculatePrice(){
-        return price;
+    public double getPrice(Catalog catalog){
+        // return price
     }
 
     public String getChipType() {

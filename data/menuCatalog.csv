@@ -10,29 +10,29 @@ MEAT|salami
 MEAT|roast beef
 MEAT|chicken
 MEAT|bacon
-EXTRA_MEAT|steak
-EXTRA_MEAT|ham
-EXTRA_MEAT|salami
-EXTRA_MEAT|roast beef
-EXTRA_MEAT|chicken
-EXTRA_MEAT|bacon
+EXTRA MEAT|steak
+EXTRA MEAT|ham
+EXTRA MEAT|salami
+EXTRA MEAT|roast beef
+EXTRA MEAT|chicken
+EXTRA MEAT|bacon
 CHEESE|american
 CHEESE|provolone
 CHEESE|cheddar
 CHEESE|swiss
-EXTRA_CHEESE|american
-EXTRA_CHEESE|provolone
-EXTRA_CHEESE|cheddar
-EXTRA_CHEESE|swiss
-REGULAR_TOPPING|lettuce
-REGULAR_TOPPING|peppers
-REGULAR_TOPPING|onions
-REGULAR_TOPPING|tomatoes
-REGULAR_TOPPING|jalapeños
-REGULAR_TOPPING|cucumbers
-REGULAR_TOPPING|pickles
-REGULAR_TOPPING|guacamole
-REGULAR_TOPPING|mushrooms
+EXTRA CHEESE|american
+EXTRA CHEESE|provolone
+EXTRA CHEESE|cheddar
+EXTRA CHEESE|swiss
+REGULAR TOPPING|lettuce
+REGULAR TOPPING|peppers
+REGULAR TOPPING|onions
+REGULAR TOPPING|tomatoes
+REGULAR TOPPING|jalapeños
+REGULAR TOPPING|cucumbers
+REGULAR TOPPING|pickles
+REGULAR TOPPING|guacamole
+REGULAR TOPPING|mushrooms
 SAUCE|mayo
 SAUCE|mustard
 SAUCE|ketchup

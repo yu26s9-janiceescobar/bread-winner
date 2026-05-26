@@ -1,26 +1,35 @@
 package com.pluralsight.models;
 
-import com.pluralsight.business.MenuCatalog;
+import com.pluralsight.business.Catalog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Sandwich extends OrderItem{
     private boolean isToasted;
     private String size;
-    private double price;
-    private ArrayList<Topping> toppings;
+    private String bread;
+    private final ArrayList<Topping> toppings;
 
-    public Sandwich(String name, String size, MenuCatalog bread){
+    public Sandwich(String name, String size){
         super(name);
+        this.size = size;
         toppings = new ArrayList<>();
     }
-
+    @Override
+    public double getPrice(Catalog catalog){
+        // return price
+    }
     public ArrayList<Topping> getSandwichTopping(){
         return toppings;
     }
     public void addTopping(Topping topping){
         toppings.add(topping);
+    }
+    public void setBread(String bread){
+        this.bread = bread;
+    }
+    public String getBread(){
+        return bread;
     }
     public void setSize(String size){
         this.size = size;
@@ -29,14 +38,6 @@ public class Sandwich extends OrderItem{
         return size;
     }
 
-    @Override
-    public double calculatePrice(){
-        double total = 0;
-        for (Topping topping: toppings){
-            total += topping.getPrice(size);
-        }
-        return total;
-    }
     public void setToasted(boolean isToasted){
         this.isToasted = isToasted;
     }

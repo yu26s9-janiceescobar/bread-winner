@@ -1,23 +1,20 @@
 package com.pluralsight.models;
 
+import com.pluralsight.business.Catalog;
+
 public class Soda extends OrderItem{
-    private final double price;
     private String drinkType;
     private String size;
 
-    public Soda(String name, double price, String drinkType, String size){
+    public Soda(String name, String drinkType, String size){
         super(name);
-        this.price = price;
         this.drinkType = drinkType;
         this.size = size;
     }
-
     @Override
-    public double calculatePrice(){
-        return price;
+    public double getPrice(Catalog catalog){
+        // return price;
     }
-    
-
     public String getDrinkType() {
         return drinkType;
     }

@@ -1,6 +1,4 @@
 package com.pluralsight.data;
-
-import com.pluralsight.business.MenuCatalog;
 import com.pluralsight.business.Store;
 
 import java.io.BufferedReader;

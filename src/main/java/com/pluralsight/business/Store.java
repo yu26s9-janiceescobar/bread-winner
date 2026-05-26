@@ -3,7 +3,7 @@ public class Store {
     private String name;
     private String address;
     private String phoneNumber;
-    private MenuCatalog menuCatalog;
+    private Catalog catalog;
 
     public Store(String name, String address, String phoneNumber){
         this.name = name;
@@ -12,12 +12,12 @@ public class Store {
 
     }
 
-    public void addMenuCatalog(MenuCatalog menuCatalog) {
-        this.menuCatalog = menuCatalog;
+    public void addMenuCatalog(Catalog catalog) {
+        this.catalog = catalog;
     }
 
-    public MenuCatalog getMenuCatalog() {
-        return menuCatalog;
+    public Catalog getMenuCatalog() {
+        return catalog;
     }
 
     public String getName() {
