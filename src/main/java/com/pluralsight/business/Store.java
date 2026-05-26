@@ -1,9 +1,4 @@
 package com.pluralsight.business;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Store {
     private String name;
     private String address;

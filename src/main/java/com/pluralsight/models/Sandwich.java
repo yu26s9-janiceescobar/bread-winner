@@ -1,5 +1,7 @@
 package com.pluralsight.models;
 
+import com.pluralsight.business.MenuCatalog;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ public class Sandwich extends OrderItem{
     private double price;
     private ArrayList<Topping> toppings;
 
-    public Sandwich(String name, String size, MenuOption bread){
+    public Sandwich(String name, String size, MenuCatalog bread){
         super(name);
         toppings = new ArrayList<>();
     }
