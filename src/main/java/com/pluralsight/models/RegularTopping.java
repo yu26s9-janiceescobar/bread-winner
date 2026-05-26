@@ -5,7 +5,7 @@ public class RegularTopping extends Topping{
         super(name);
     }
     @Override
-    public double getPrice(int size){
+    public double getPrice(SandwichSize size){
         return 0;
     }
 }

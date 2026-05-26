@@ -7,8 +7,9 @@ public class Meat extends Topping{
         super(name);
         this.isExtra = isExtra;
     }
+
     @Override
-    public double getPrice(int size){
+    public double getPrice(SandwichSize size){
         return (isExtra) ? getExtraPrice(size) : getBasePrice(size);
     }
     public void setExtra(boolean isExtra){
@@ -17,21 +18,19 @@ public class Meat extends Topping{
     public boolean isExtra(){
         return isExtra;
     }
-    public double getBasePrice(int size){
+    public static double getBasePrice(SandwichSize size){
         return switch(size){
-            case 4 -> 0.5;
-            case 8 -> 1.0;
-            case 12 -> 1.5;
-            default -> 0;
+            case SMALL -> 0.5;
+            case MEDIUM -> 1.0;
+            case LARGE -> 1.5;
         };
     }
 
-    public double getExtraPrice(int size){
+    public static double getExtraPrice(SandwichSize size){
             return switch(size){
-                case 4 -> 1.0;
-                case 8 -> 2.0;
-                case 12 -> 3.0;
-                default -> 0;
+                case SMALL -> 1.0;
+                case MEDIUM -> 2.0;
+                case LARGE -> 3.0;
         };
     }
 

@@ -10,5 +10,5 @@ public abstract class Topping {
         return name;
     }
 
-    public abstract double getPrice(int size);
+    public abstract double getPrice(SandwichSize size);
 }
