@@ -1,11 +1,13 @@
 package com.pluralsight.models;
 
-public class Topping {
+public abstract class Topping {
     private final String name;
     public Topping(String name){
         this.name = name;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
+    public abstract double getPrice(int size);
 }

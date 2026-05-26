@@ -1,7 +1,5 @@
 package com.pluralsight.models;
 
-import com.pluralsight.business.Catalog;
-
 public class Soda extends OrderItem{
     private String drinkType;
     private String size;
@@ -12,8 +10,8 @@ public class Soda extends OrderItem{
         this.size = size;
     }
     @Override
-    public double getPrice(Catalog catalog){
-        // return price;
+    public double getPrice(){
+        return 0;
     }
     public String getDrinkType() {
         return drinkType;

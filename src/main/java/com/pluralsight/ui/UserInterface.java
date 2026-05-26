@@ -1,24 +1,38 @@
 package com.pluralsight.ui;
-import com.pluralsight.business.Catalog;
-import com.pluralsight.business.Store;
-import com.pluralsight.models.*;
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
+//Meats
+//- steak
+//- ham
+//- salami
+//- roast beef
+//- chicken
+//- bacon
 
 public class UserInterface {
-    private Store store;
     private Console console;
 
-    private Catalog catalog;
-    private void init(Store store, Console console) {
-        this.store = store;
-        this.console = console;
-        catalog = store.getMenuCatalog();
-    }
+    String[] meat = {"steak", "ham", "salami", "roast beef", "chicken", "bacon"};
+    String[] cheese = {"american", "provolone", "cheddar", "swiss"};
+    int[] sandwichSize = {4, 8, 12};
+    String[] breads = {"white", "wheat", "rye", "wrap"};
+    String[] regularToppings = { "lettuce", "peppers","onions","tomatoes","jalapeños","cucumbers","pickles","guacamole","mushrooms"};
+    String[] sauces = {"mayo", "mustard", "ketchup", "ranch", "thousand islands", "vinaigrette"};
+    String[] sides = {"au jus","sauce"};
+    String[] soda = {"coke", "ginger ale", "sprite", "diet coke"};
+    String[] sodaSize = {"small", "medium", "large"};
+    String[] chips = {"salt and vinegar", "potato", "bbq"};
+    double[] sandwichPrices = {5.5, 7.0, 8.5};
+    double[] meatPrices = {1.0, 2.0, 3.0};
+    double[] cheesePrices = {.75, 1.50, 2.25};
+    double[] sodaPrices = {2.0, 2.5, 3.0};
+    double[] chipPrices ={1.5};
 
-    public void display(Store store, Console console) {
-        init(store, console);
+
+    private void init(Console console) {
+        this.console = console;
+    }
+    public void display(Console console) {
+        init(console);
 
         int option;
         do {
@@ -53,7 +67,7 @@ public class UserInterface {
                     System.out.println("Cancelling Order...");
                     break;
                 case 1:
-                    processAddSandwich();
+                    //processAddSandwich();
                     break;
                 case 2:
                     // processAddDrink();
@@ -68,65 +82,15 @@ public class UserInterface {
         } while (option != 0);
     }
 
-    private void displayListOfMenuOptions(ArrayList<CatalogItem> catalogItems){
-        AtomicInteger atomicInteger = new AtomicInteger(1);
-        for (CatalogItem catalogItem : catalogItems){
-            System.out.printf("[%s] %s%n", atomicInteger.getAndIncrement(), catalogItem.getName());
-        }
-    }
-    private void displaySandwichSizeCost(ArrayList<PriceEntry> priceEntries){
-        AtomicInteger atomicInteger = new AtomicInteger(1);
-        for (PriceEntry priceEntry: priceEntries){
-            System.out.printf("[%s] %s-inch - $%.2f%n", atomicInteger.getAndIncrement(),  priceEntry.getSize(), priceEntry.getPrice());
-        }
-    }
-    private void processAddTopping(String category, Sandwich sandwich){
-        double price = catalog.getPrice(category, sandwich.getSize());
-        System.out.printf("""
-                What %s would you like to add?
-                Additional Cost: $%.2f
-                """ ,category, price);
-
-        ArrayList<CatalogItem> toppings = catalog.getMenuItemByCategory(category);
-        displayListOfMenuOptions(toppings);
-        int choice = console.promptForIntRange("> ",1, toppings.size());
-        CatalogItem toppingSelected = toppings.get(choice);
-        sandwich.addTopping(new Topping(toppingSelected.getName()));
-        String extraToppingCategory = "extra " + category;
-        double extraPrice = catalog.getPrice(extraToppingCategory, sandwich.getSize());
-        System.out.printf("""
-                Would you like to add extra %s?
-                Additional Cost: $%.2f
-                """ ,extraToppingCategory, extraPrice);
-        boolean addExtraTopping = console.promptForYesNo("[Y] Yes [N] No");
-        if (addExtraTopping){
-            sandwich.addTopping(new Topping(extraToppingCategory));
-        }
-    }
-
-    private void processAddSandwich(){
-        System.out.println("What bread would you like? ");
-        ArrayList<CatalogItem> breads = catalog.getMenuItemByCategory("bread");
-        displayListOfMenuOptions(breads);
-
-        int breadOption = console.promptForIntRange("> ", 1, breads.size());
-        CatalogItem selectedBread = breads.get(breadOption - 1);
-
-        System.out.println("What size would you like? ");
-        ArrayList<PriceEntry> breadPrices = catalog.getPriceEntryByCategory("bread");
-        displaySandwichSizeCost(breadPrices);
-        int sizeOption = console.promptForIntRange("> ",1, breadPrices.size());
-        PriceEntry sandwichPrice = breadPrices.get(sizeOption - 1);
-
-        Sandwich sandwich = new Sandwich("Custom Sandwich", sandwichPrice.getSize());
-        sandwich.setBread(selectedBread.getName());
-        processAddTopping("meat", sandwich);
-        processAddTopping("cheese", sandwich);
-        processAddTopping("regular topping", sandwich);
-        processAddTopping("sauce", sandwich);
+    public void processAddSandwich(){
 
     }
-
-
-
 }
+
+
+
+
+
+
+
+

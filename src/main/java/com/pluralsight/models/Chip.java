@@ -1,7 +1,5 @@
 package com.pluralsight.models;
 
-import com.pluralsight.business.Catalog;
-
 public class Chip extends OrderItem {
     private String name;
     private String chipType;
@@ -10,8 +8,8 @@ public class Chip extends OrderItem {
         this.chipType = chipType;
     }
     @Override
-    public double getPrice(Catalog catalog){
-        // return price
+    public double getPrice(){
+        return 0;
     }
 
     public String getChipType() {

@@ -1,7 +1,5 @@
 package com.pluralsight.models;
 
-import com.pluralsight.business.Catalog;
-
 import java.util.ArrayList;
 
 public class Sandwich extends OrderItem{
@@ -16,8 +14,8 @@ public class Sandwich extends OrderItem{
         toppings = new ArrayList<>();
     }
     @Override
-    public double getPrice(Catalog catalog){
-        // return price
+    public double getPrice(){
+        return 0;
     }
     public ArrayList<Topping> getSandwichTopping(){
         return toppings;
