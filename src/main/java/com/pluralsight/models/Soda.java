@@ -1,6 +1,6 @@
 package com.pluralsight.models;
 
-public class Soda extends OrderItem{
+public class Soda extends OrderItem {
     private String drinkType;
     private String size;
 

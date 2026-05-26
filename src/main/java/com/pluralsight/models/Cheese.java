@@ -9,16 +9,15 @@ public class Cheese extends Topping{
     public void setExtra(boolean isExtra){
         this.isExtra = isExtra;
     }
+    public boolean isExtra(){
+        return isExtra;
+    }
+
     @Override
     public double getPrice(int size){
-        return switch(size){
-            case 4 -> .75;
-            case 8 -> 1.50;
-            case 12 -> 2.25;
-            default -> 0;
-        };
+        return (isExtra) ? getExtraPrice(size) : getBasePrice(size);
     }
-    public double getExtraCheesePrice(int size){
+    public double getExtraPrice(int size){
         return switch(size){
             case 4 -> 0.30;
             case 8 -> 0.60;
@@ -26,7 +25,7 @@ public class Cheese extends Topping{
             default -> 0;
         };
     }
-    public double getBaseCheesePrice(int size){
+    public double getBasePrice(int size){
         return switch(size){
             case 4 -> .75;
             case 8 -> 1.50;

@@ -29,22 +29,9 @@ public class UserInterface {
     }
     public void display(Console console) {
         init(console);
+        MainMenuScreen mainMenuScreen = new MainMenuScreen(console);
+        mainMenuScreen.start();
 
-        int option;
-        do {
-            System.out.println("""
-                    Bread Winner Shop
-                    [1] New Order
-                    [0] Exit""");
-            option = console.promptForIntRange("> ", 0, 1);
-            switch (option) {
-                case 0:
-                    System.out.println("Exiting Application...");
-                    break;
-                case 1:
-                    processNewOrder();
-            }
-        } while (option != 0);
     }
 
     private void processNewOrder() {
@@ -104,7 +91,6 @@ public class UserInterface {
             System.out.printf("[%d] %s ---- %.2f", atomicInteger.getAndIncrement(), size, sandwich.getPrice());
         }
     }
-
     public void processAddSandwich(){
         Sandwich sandwich = new Sandwich("Custom", 0);
 
@@ -120,17 +106,25 @@ public class UserInterface {
         displayMeatOptions(sandwich.getSize(), false);
         int meatChoice = console.promptForIntRange("Choose Meat: ", 1, meats.length);
         String selectedMeat = meats[meatChoice - 1];
-
+        Topping meat = new Meat(selectedMeat, false);
         displayMeatOptions(sandwich.getSize(), true);
-        boolean extraMeat = console.promptForYesNo("Extra Meat: [Y] Yes [N] No");
-
+        boolean isExtraMeat = console.promptForYesNo("Extra Meat: [Y] Yes [N] No");
+        if (isExtraMeat){
+            Topping extraMeat = new Meat(selectedMeat, true);
+        }
         displayCheeseOptions(sandwich.getSize(), false);
         int cheeseChoice = console.promptForIntRange("Choose cheese: ", 1, cheeses.length);
+        String selectedCheese = cheeses[cheeseChoice - 1];
         displayCheeseOptions(sandwich.getSize(), true);
-        boolean extraCheese = console.promptForYesNo("Extra Cheese: [Y] Yes [N] No");
+        boolean isExtraCheese = console.promptForYesNo("Extra Cheese: [Y] Yes [N] No");
+        if (isExtraCheese){
+            Topping extraCheese = new Cheese(selectedCheese, true);
+        }
+
 
 
     }
+
 }
 
 

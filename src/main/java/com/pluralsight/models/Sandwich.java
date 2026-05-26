@@ -2,7 +2,7 @@ package com.pluralsight.models;
 
 import java.util.ArrayList;
 
-public class Sandwich extends OrderItem{
+public class Sandwich extends OrderItem {
     private boolean isToasted;
     private int size;
     private String bread;
@@ -32,7 +32,7 @@ public class Sandwich extends OrderItem{
         }
         return runningTotal;
     }
-    
+
     public ArrayList<Topping> getSandwichTopping(){
         return toppings;
     }
