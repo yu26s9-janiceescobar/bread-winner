@@ -9,7 +9,7 @@ public class Chip extends OrderItem {
     }
     @Override
     public double getPrice(){
-        return 0;
+        return 1.5;
     }
 
     public String getChipType() {

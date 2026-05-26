@@ -11,7 +11,12 @@ public class Soda extends OrderItem{
     }
     @Override
     public double getPrice(){
-        return 0;
+        return switch(size){
+            case "small" -> 2.0;
+            case "medium" -> 2.5;
+            case "large" -> 3.0;
+            default -> 0;
+        };
     }
     public String getDrinkType() {
         return drinkType;

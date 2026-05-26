@@ -4,19 +4,35 @@ import java.util.ArrayList;
 
 public class Sandwich extends OrderItem{
     private boolean isToasted;
-    private String size;
+    private int size;
     private String bread;
     private final ArrayList<Topping> toppings;
 
-    public Sandwich(String name, String size){
+    public Sandwich(String name, int size){
         super(name);
         this.size = size;
         toppings = new ArrayList<>();
     }
     @Override
     public double getPrice(){
-        return 0;
+        double runningTotal = 0;
+        switch (size){
+            case 4:
+                runningTotal += 5.5;
+                break;
+            case 8:
+                runningTotal += 7.0;
+                break;
+            case 12:
+                runningTotal += 8.5;
+                break;
+        }
+        for (Topping topping: toppings){
+            runningTotal += topping.getPrice(size);
+        }
+        return runningTotal;
     }
+    
     public ArrayList<Topping> getSandwichTopping(){
         return toppings;
     }
@@ -29,10 +45,10 @@ public class Sandwich extends OrderItem{
     public String getBread(){
         return bread;
     }
-    public void setSize(String size){
+    public void setSize(int size){
         this.size = size;
     }
-    public String getSize(){
+    public int getSize(){
         return size;
     }
 
