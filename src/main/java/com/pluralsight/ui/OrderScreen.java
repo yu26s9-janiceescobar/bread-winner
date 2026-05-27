@@ -1,10 +1,8 @@
 package com.pluralsight.ui;
 import com.pluralsight.business.Order;
-import com.pluralsight.models.Chip;
-import com.pluralsight.models.OrderItem;
+import com.pluralsight.models.Chips;
+import com.pluralsight.models.OrderableItem;
 import com.pluralsight.models.Soda;
-import com.pluralsight.models.SodaSize;
-
 
 
 public class OrderScreen {
@@ -64,7 +62,7 @@ public class OrderScreen {
     private void prcoessAddChip(){
         String[] chips = {"bbq", "salt and vinegar", "doritos", "cheetos"};
         String selectedChip = selectOption(chips);
-        order.addToOrder(new Chip("Chips", selectedChip));
+        order.addToOrder(new Chips("Chips", selectedChip));
     }
     private String selectOption(String[] options){
         for (int i = 0; i < options.length; i++){
@@ -77,7 +75,7 @@ public class OrderScreen {
         int option;
         do {
             System.out.println("Order Summary");
-            for (OrderItem orderItem : order.getOrder()) {
+            for (OrderableItem orderItem : order.getOrder()) {
                 System.out.printf("""
                         %s ----- %.2f""", orderItem.getName(), orderItem.getPrice());
             }

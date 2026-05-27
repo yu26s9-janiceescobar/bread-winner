@@ -1,7 +1,7 @@
 package com.pluralsight.data;
 
 import com.pluralsight.business.Order;
-import com.pluralsight.models.OrderItem;
+import com.pluralsight.models.OrderableItem;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -19,9 +19,9 @@ public class ReceiptFileManager {
         try(
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))
             ) {
-                ArrayList<OrderItem> orders = order.getOrder();
+                ArrayList<OrderableItem> orders = order.getOrder();
                 bufferedWriter.write("Order Summary");
-                for(OrderItem item: orders){
+                for(OrderableItem item: orders){
                     bufferedWriter.write(String.format("%s ----- ",item.getName(), item.getPrice()));
                 }
 
