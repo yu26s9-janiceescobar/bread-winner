@@ -33,7 +33,6 @@ public class Console {
             }
             System.out.println("Must Enter a Valid Option.");
         }
-
     }
     public boolean promptForYesNo(String prompt){
         String userInput = promptForStringOptions(prompt, "y", "n");

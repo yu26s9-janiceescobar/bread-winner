@@ -19,5 +19,10 @@ public enum SandwichSize{
         public double getBasePrice(){
             return basePrice;
         }
-
+        @Override
+        public String toString(){
+             return String.format("""
+                     %d --- $%.2f", name(), price)""",
+                     inches, basePrice);
+        }
 }

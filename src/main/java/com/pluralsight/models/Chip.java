@@ -4,6 +4,7 @@ public class Chip extends OrderItem {
     private String name;
     private String chipType;
     public Chip(String name, String chipType){
+
         super(name);
         this.chipType = chipType;
     }

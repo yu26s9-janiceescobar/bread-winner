@@ -7,6 +7,7 @@ public abstract class OrderItem {
         this.name = name;
     }
     public abstract double getPrice();
+//    public abstract String getDetails();
     public String getName() {
         return name;
     }

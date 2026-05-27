@@ -14,97 +14,76 @@ public class SandwichScreen {
     public SandwichScreen(Console console){
         this.console = console;
     }
-    private String getUserSelection(String[] selection, String category){
-        int choice = console.promptForIntRange("Choose " + category, 1, selection.length);
-        return selection[choice - 1];
-    }
 
     public Sandwich buildSandwich(){
         Sandwich sandwich;
         SandwichSize size = getSandwichSize();
         sandwich = new Sandwich("Custom Sandwich", size);
         sandwich.setBread(selectOption(breads, "Breads"));
+        sandwich.setToasted(console.promptForYesNo("Toast bread? [Y] Yes [N] No"));
         addMeat(sandwich);
         addCheese(sandwich);
-        addRegularTopping(sandwich);
-        addSauce(sandwich);
-        addSide(sandwich);
+        addRegTopping(sandwich, regularToppings, "regular topping");
+        addRegTopping(sandwich, sauces, "sauce");
+        addRegTopping(sandwich, sides, "sides");
         return sandwich;
     }
-    private void addSide(Sandwich sandwich){
-        boolean addSide;
-        int maxSides = 0;
-        do {
-            String selectedTopping = selectOption(sides, "Sides");
-            sandwich.addTopping(new RegularTopping(selectedTopping));
-            addSide = console.promptForYesNo("Add another topping? [Y] yes [N] no\n");
-            maxSides++;
-        }while(addSide && maxSides < sides.length);
-    }
-    private void addRegularTopping(Sandwich sandwich){
-        boolean addTopping;
+
+
+    private void addRegTopping(Sandwich sandwich, String[] selection, String category){
+        boolean addToSandwich;
         int maxToppings = 0;
         do {
-            String selectedTopping = selectOption(regularToppings, "Regular Topping");
+            String selectedTopping = selectOption(selection, category);
             sandwich.addTopping(new RegularTopping(selectedTopping));
-            addTopping = console.promptForYesNo("Add another topping? [Y] yes [N] no\n");
+            addToSandwich = console.promptForYesNo("Add another " + category + " [Y] yes [N] no\n");
             maxToppings++;
-        }while(addTopping && maxToppings < regularToppings.length);
-    }
-    private void addSauce(Sandwich sandwich){
-        boolean addSauce;
-        int maxSauce = 0;
-        do {
-            String selectedTopping = selectOption(sauces, "Sauces");
-            sandwich.addTopping(new RegularTopping(selectedTopping));
-            addSauce = console.promptForYesNo("Add another topping? [Y] yes [N] no\n");
-            maxSauce++;
-        }while(addSauce && maxSauce < sauces.length);
+        }while(addToSandwich && maxToppings < selection.length);
     }
 
     private void addMeat(Sandwich sandwich){
-        for (int i = 0; i < meats.length; i++){
-            System.out.printf("[%d] %s --- $%.2f (Extra: $%.2f)%n",
-                    i + 1, meats[i], Meat.getBasePrice(sandwich.getSize()), Meat.getExtraPrice(sandwich.getSize()));
-        }
-        String selectedMeat = getUserSelection(meats, "Meat");
-        sandwich.addTopping(new Meat(selectedMeat, false));
-        boolean addExtraMeat = console.promptForYesNo("Extra Meat: [Y] Yes [N] No");
-        if (addExtraMeat){
+        String selectedMeat = selectOption(meats,"Select Meat: ");
+        PremiumTopping meat = new Meat(selectedMeat, false);
+        double basePrice = meat.getBasePrice(sandwich.getSize());
+        double extraPrice = meat.getExtraPrice(sandwich.getSize());
+        System.out.printf("Price: $%.2f Additional Cost: $%.2f %n", basePrice, extraPrice);
+        sandwich.addTopping(meat);
+        if (console.promptForYesNo("Extra Meat: [Y] Yes [N] No")){
             sandwich.addTopping(new Meat(selectedMeat, true));
         }
     }
 
 
     private void addCheese(Sandwich sandwich){
-        for (int i = 0; i < cheeses.length; i++){
-            System.out.printf("[%d] %s --- $%.2f (Extra: $%.2f)%n",
-                    i + 1, cheeses[i], Cheese.getBasePrice(sandwich.getSize()), Cheese.getExtraPrice(sandwich.getSize()));
-        }
-        String selectedCheese = getUserSelection(cheeses, "Cheese");
-        sandwich.addTopping(new Cheese(selectedCheese, false));
-        boolean addExtraCheese = console.promptForYesNo("Extra Cheese: [Y] Yes [N] No");
-        if (addExtraCheese){
+        String selectedCheese = selectOption(cheeses, "Select Cheese: ");
+        PremiumTopping cheese = new Cheese(selectedCheese, false);
+        double basePrice = cheese.getBasePrice(sandwich.getSize());
+        double extraPrice = cheese.getExtraPrice(sandwich.getSize());
+        System.out.printf("Price: $%.2f Additional Cost: $%.2f %n", basePrice, extraPrice);
+        sandwich.addTopping(cheese);
+        if (console.promptForYesNo("Extra Cheese: [Y] Yes [N] No")){
             sandwich.addTopping(new Cheese(selectedCheese, true));
         }
     }
 
 
 
-    private String selectOption(String[] selection, String category){
+    private String selectOption(String[] selection, String prompt){
         for (int i = 0; i < selection.length; i++){
             System.out.printf("[%d] %s%n", i + 1, selection[i]);
         }
-        return getUserSelection(selection, category);
+        int choice = console.promptForIntRange(prompt, 1, selection.length);
+        return selection[choice - 1];
     }
 
     private SandwichSize getSandwichSize(){
         SandwichSize[] sizes = SandwichSize.values();
         for (int i = 0; i < sizes.length; i++){
-            System.out.printf("[%d] %d --- %.2f%n", i + 1, sizes[i].getInches(), sizes[i].getBasePrice());
+            System.out.printf("[%d] %s%n", i + 1, sizes[i].getInches());
         }
         int choice = console.promptForIntRange("Choose Size%n> " , 1, sizes.length);
         return sizes[choice - 1];
+
     }
 
 
