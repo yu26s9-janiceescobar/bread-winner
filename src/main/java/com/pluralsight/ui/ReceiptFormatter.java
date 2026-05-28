@@ -8,54 +8,52 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ReceiptFormatter {
-    public static void receiptFormatter(Order order){
-        ArrayList<OrderableItem> format = order.getOrder();
-        format.sort(Comparator.comparingInt(item -> item instanceof Sandwich ? 0 : 1));
-        System.out.printf("%25s%n","Order Summary");
-        System.out.println("=".repeat(50));
+    public static String format(Order order){
+        StringBuilder stringBuilder = new StringBuilder();
+        List<OrderableItem> formattedOrder = new ArrayList<>(order.getOrder());
+        formattedOrder.sort(Comparator.comparingInt(item -> item instanceof Sandwich ? 0 : 1));
+        stringBuilder.append(String.format("%25s%n","Order Summary"));
+        stringBuilder.repeat("=", 50);
 
-        for (OrderableItem item: format){
-
+        for (OrderableItem item: formattedOrder){
             if (item instanceof Sandwich){
-                System.out.printf("""
-                        %s - %s (%s)
-                        \tBread: %s
-                        \tToasted: %s
-                        \n""",
+                Sandwich sandwich = (Sandwich) item;
+                stringBuilder.append(String.format("%n%s - %s (%s)%n\tBread: %s%nToasted: %s%n%n",
                         item.getCategory(),
                         item.getName(),
-                        ((Sandwich) item).getSize().getLabel(),
-                        ((Sandwich) item).getBread().getLabel(),
-                        ((Sandwich) item).isToasted() ? "Yes" : "No");
+                        sandwich.getSize().getLabel(),
+                        sandwich.getBread().getLabel(),
+                        sandwich.isToasted() ? "Yes" : "No"));
 
-                List<Topping> toppings = ((Sandwich) item).getAllToppings();
+                List<Topping> toppings = new ArrayList<>(sandwich.getAllToppings());
+                toppings.sort(Comparator.comparing(Topping::getCategory) // sort categories together
+                        .thenComparing(t -> t.getName().startsWith("Extra") ? 1 : 0) // normal toppings before "extra" toppings.
+                        .thenComparing(Topping::getName)); // sort topping alphabetically
 
-                toppings.sort(Comparator.comparing(Topping::getCategory)
-                        .thenComparing(t -> t.getName().startsWith("Extra") ? 1 : 0));
 
 
                     String currentCategory = "";
                     for (Topping t : toppings) {
-                        if (!t.getCategory().equals(currentCategory) && !t.getName().startsWith("Extra")) {
+                        if (!t.getCategory().equals(currentCategory)) {
                             currentCategory = t.getCategory();
-                            System.out.printf("%10s: %n", currentCategory.toUpperCase());
+                            stringBuilder.append(String.format("%10s: %n", currentCategory.toUpperCase()));
                         }
-                        if (t.getName().startsWith("Extra")) {
-                            System.out.printf("%10s %-25s", "+ ", t.getName());
-                        }
-                        else{
-                            System.out.printf("%10s %-25s", " ",t.getName());
-                        }
-
-                        double price = t.getPrice(((Sandwich) item).getSize());
-                        System.out.printf("%10s%n",
-                                price == 0 ? "FREE" : String.format("$%.2f", price) );
+                        boolean isExtra = t.getName().startsWith("Extra");
+                        double price = isExtra ? t.getExtraPrice(sandwich.getSize()) : t.getPrice(sandwich.getSize());
+                        stringBuilder.append(String.format("%10s %-25s %10s%n",
+                               isExtra ? "+ " : " ",
+                               t.getName(),
+                               price == 0 ? "FREE" : String.format("$%.2f", price)));
                     }
-            }else{
-                System.out.println("-".repeat(50));
-                System.out.printf("%s - %s \t$%5.2f%n", item.getCategory().toUpperCase(), item.getName(), item.getTotalPrice());
+                stringBuilder.repeat("-", 50);
+            }
+            if (item instanceof Chips || item instanceof Soda){
+
+                stringBuilder.append(String.format("%-10s - %-25s $%.2f%n", item.getCategory().toUpperCase(), item.getName(), item.getTotalPrice()));
             }
         }
-        System.out.println("-".repeat(50));
+        stringBuilder.repeat("-",50);
+        stringBuilder.append(String.format("%-40s $%,.2f %n", "TOTAL PRICE:",order.getTotalPrice()));
+        return stringBuilder.toString();
     }
 }

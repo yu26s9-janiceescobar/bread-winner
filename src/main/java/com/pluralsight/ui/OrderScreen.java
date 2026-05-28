@@ -3,8 +3,6 @@ import com.pluralsight.business.Order;
 import com.pluralsight.models.*;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 public class OrderScreen {
     private final Console console;
@@ -78,7 +76,8 @@ public class OrderScreen {
             System.out.println("You must order a soda or chips to check out.");
             return;
         }
-        ReceiptFormatter.receiptFormatter(order);
+        System.out.println(ReceiptFormatter.format(order));
+        console.promptForYesNo("[C] Confirm [E] Edit [ ")
 
 
     }
