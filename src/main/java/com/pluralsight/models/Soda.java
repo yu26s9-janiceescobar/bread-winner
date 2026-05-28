@@ -1,16 +1,19 @@
 package com.pluralsight.models;
 
 public class Soda extends OrderableItem {
-    private String size;
-    public Soda(String name, double price, String size){
-        super(name, price);
+    private SodaSize size;
+    public Soda(String category, String name, SodaSize size){
+        super(category, name);
         this.size = size;
     }
-
-    public void setSize(String size){
+    @Override
+    public double getTotalPrice(){
+        return size.getPrice();
+    }
+    public void setSize(SodaSize size){
         this.size = size;
     }
-    public String getSize(){
+    public SodaSize getSize(){
         return size;
     }
 }

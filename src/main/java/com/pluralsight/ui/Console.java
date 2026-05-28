@@ -7,7 +7,17 @@ public class Console {
     public Console(){
         scanner = new Scanner(System.in);
     }
-
+    public int promptForIntOptions(String prompt, int ... options){
+        while(true) {
+            int userInput = promptForInt(prompt);
+            for (int option : options) {
+                if (userInput == option) {
+                    return userInput;
+                }
+            }
+            System.out.println("Must enter a valid option.");
+        }
+    }
     public String promptForString(String prompt){
         System.out.print(prompt);
         return scanner.nextLine().strip();

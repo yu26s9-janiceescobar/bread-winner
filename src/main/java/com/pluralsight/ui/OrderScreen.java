@@ -1,16 +1,21 @@
 package com.pluralsight.ui;
 import com.pluralsight.business.Order;
-import com.pluralsight.models.Chips;
-import com.pluralsight.models.OrderableItem;
-import com.pluralsight.models.Soda;
+import com.pluralsight.models.*;
+
+import java.awt.*;
 
 
 public class OrderScreen {
     private final Console console;
     private final Order order;
+    private final static String[] sandwichSize = {"4 inch", "8 inch", "12 inch"};
+    private final static String[] soda = {"sprite", "ginger ale", "pepsi"};
+    private final static String[] breads = {"white", "wheat", "rye", "wrap"};
+
     public OrderScreen(Console console){
         this.console = console;
-        this.order = new Order();
+        order = new Order();
+
     }
     public void startNewOrder(){
             int option;
@@ -28,13 +33,13 @@ public class OrderScreen {
                         System.out.println("Cancelling Order...");
                         break;
                     case 1:
-                        processAddSandwich();
+                        //processAddSandwich();
                         break;
                     case 2:
-                        addSoda();
+                        //addSoda();
                         break;
                     case 3:
-                        addChip();
+                        //addChip();
                         break;
                     case 4:
                         // processCheckOut();
@@ -42,60 +47,10 @@ public class OrderScreen {
                 }
             } while (option != 0);
     }
-    private void processAddSandwich(){
-        SandwichScreen sandwichScreen = new SandwichScreen(console);
-        order.addToOrder(sandwichScreen.buildSandwich());
+
+    private void processNewSandwich(){
+
     }
 
-    private void processAddSoda(){
-        String[] sodas = {"coca cola", "ginger ale", "mountain dew", "club soda"};
-        String selectedSoda = selectOption(sodas);
-        SodaSize[] sizes = SodaSize.values();
-
-        for (int i = 0; i < sizes.length; i++){
-            System.out.printf("[%d] %s%n", i + 1, sizes[i]);
-        }
-        int choice = console.promptForIntRange("Choose Size%n> " , 1, sizes.length);
-        SodaSize size = sizes[choice - 1];
-        order.addToOrder(new Soda("Soda", selectedSoda, size));
-    }
-    private void prcoessAddChip(){
-        String[] chips = {"bbq", "salt and vinegar", "doritos", "cheetos"};
-        String selectedChip = selectOption(chips);
-        order.addToOrder(new Chips("Chips", selectedChip));
-    }
-    private String selectOption(String[] options){
-        for (int i = 0; i < options.length; i++){
-            System.out.printf("[%d] %s%n", i + 1, options[i]);
-        }
-        int choice = console.promptForIntRange("Choose:%n> " , 1, options.length);
-        return options[choice - 1];
-    }
-    private void processCheckOut(){
-        int option;
-        do {
-            System.out.println("Order Summary");
-            for (OrderableItem orderItem : order.getOrder()) {
-                System.out.printf("""
-                        %s ----- %.2f""", orderItem.getName(), orderItem.getPrice());
-            }
-            System.out.println("""
-                    Select an Option:
-                    [1] Confirm Order
-                    [2] Edit Order
-                    [3] Cancel Order
-                    """);
-            option = console.promptForIntRange("> ", 1, 3);
-            switch(option){
-                case 1:
-
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-            }
-        } while(option != 3);
-    }
 
 }

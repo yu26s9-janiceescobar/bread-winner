@@ -20,7 +20,7 @@ public class Order {
     public double getTotalPrice(){
         double total = 0;
         for (OrderableItem item: order){
-             total += item.getPrice();
+             total += item.getTotalPrice();
         }
         return total;
     }
