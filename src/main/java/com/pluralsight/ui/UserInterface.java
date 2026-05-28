@@ -1,13 +1,11 @@
 package com.pluralsight.ui;
 
 public class UserInterface {
-    private Console console;
-
-    private void init(Console console) {
+    private final Console console;
+    public UserInterface(Console console){
         this.console = console;
     }
-    public void display(Console console){
-        init(console);
+    public void display(){
         int option;
         do {
             System.out.println("""

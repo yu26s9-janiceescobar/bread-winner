@@ -11,11 +11,12 @@ public class OrderScreen {
     private final Console console;
     private final Order order;
     private final ReceiptFileManager receiptFileManager;
-;
+    private final SandwichRequest request;
     public OrderScreen(Console console){
         this.console = console;
         order = new Order();
         receiptFileManager = new ReceiptFileManager();
+        request = new SandwichRequest(console);
 
     }
     public void startNewOrder(){
@@ -54,34 +55,34 @@ public class OrderScreen {
                 \t\tSandwich Screen
                 \t[1] Custom Sandwich
                 \t[2] Speciality Sandwich
-                \t[3] Cancel
+                \t[0] Cancel
                 """);
-        int option = console.promptForIntRange("> ",0, 3);
+        int option = console.promptForIntRange("> ",0, 2);
         switch(option){
             case 1:
+                buildCustomSandwich();
                 break;
             case 2:
-                break;
-            case 3:
+                buildSpecialitySandwich();
                 break;
             case 0:
                 System.out.println("Cancelling Sandwich Order...");
                 break;
         }
-        int option = console.promptForIntRange("> ",1, 3);
-        getSpecialitySandwich();
+    }
+    private void buildSpecialitySandwich(){
+        SpecialitySandwich selection = getSpecialitySandwich();
+        SandwichSize size = request.requestSandwichSize();
+        order.addToOrder(SandwichFactory.create(selection, size));
+    }
+    private void buildCustomSandwich(){
         SandwichRequest request = new SandwichRequest(console);
         SandwichSize size = request.requestSandwichSize();
         BreadType bread = request.requestBread();
         boolean isToasted = request.requestIsToasted();
-        ArrayList<Topping> allToppings = new ArrayList<>();
-        allToppings.addAll(request.requestToppings(size, ToppingCategory.MEAT));
-        allToppings.addAll(request.requestToppings(size, ToppingCategory.CHEESE));
-        allToppings.addAll(request.requestToppings(size, ToppingCategory.REGULAR_TOPPING));
-        allToppings.addAll(request.requestToppings(size, ToppingCategory.SAUCE));
-        allToppings.addAll(request.requestToppings(size, ToppingCategory.SIDE));
-        allToppings.addAll(request.requestToppings(size, ToppingCategory.MEAT));
-
+        ArrayList<Topping> allToppings = request.requestAllToppings(size);
+        Sandwich sandwich = new Sandwich("Custom", size, bread, isToasted, allToppings);
+        order.addToOrder(sandwich);
     }
     private void processAddSoda(){
         SodaSize sodaSize = getSodaSize();
@@ -100,13 +101,9 @@ public class OrderScreen {
     }
     private void processCheckOut(){
         ArrayList<OrderableItem> finalOrder = order.getOrder();
-        boolean hasSandwich = order.getOrder().stream().anyMatch(item -> item instanceof Sandwich);
-        boolean hasOtherProduct = order.getOrder().stream().anyMatch(item -> item instanceof Soda || item instanceof Chips);
+        boolean hasSandwich = finalOrder.stream().anyMatch(item -> item instanceof Sandwich);
+        boolean hasOtherProduct = finalOrder.stream().anyMatch(item -> item instanceof Soda || item instanceof Chips);
         if (finalOrder.isEmpty()){
-            System.out.println("Your order is empty.");
-            return;
-        }
-        if (!hasSandwich && !hasOtherProduct){
             System.out.println("You must order a soda or chips to check out.");
             return;
         }
@@ -120,16 +117,40 @@ public class OrderScreen {
                     receiptFileManager.saveReceipt(orderSummary);
                     break;
                 case "e":
-                    //
+                        //
                     break;
                 case "x":
                     System.out.println("Cancelling Order...");
                     break;
             }
         }while(option.equalsIgnoreCase("e"));
+    }
+    private void editSandwich(){
+        System.out.println("""
+                        
+               """)
+    }
+    private void editOrder(){
+        OrderableItem item = getEditOrderSelection();
+        if (item instanceof Sandwich){
 
+        }
+        else if(item instanceof Soda){
 
+        }
+        else if(item instanceof Chips){
 
+        }
+    }
+    private OrderableItem getEditOrderSelection(){
+        ArrayList<OrderableItem> items = order.getOrder();
+        System.out.println("""
+                What would you like to edit?""");
+        for (int i = 0; i < items.size(); i++){
+            System.out.printf("[%d] %s%n", i + 1, items.get(i).getName());
+        }
+        int choice = console.promptForIntRange("> " , 1, items.size());
+        return items.get(choice - 1);
     }
     private SpecialitySandwich getSpecialitySandwich(){
         SpecialitySandwich[] type = SpecialitySandwich.values();

@@ -5,7 +5,7 @@ import com.pluralsight.ui.UserInterface;
 public class Main {
     public static void main(String[] args){
         Console console = new Console();
-        UserInterface userInterface = new UserInterface();
-        userInterface.display(console);
+        UserInterface userInterface = new UserInterface(console);
+        userInterface.display();
     }
 }

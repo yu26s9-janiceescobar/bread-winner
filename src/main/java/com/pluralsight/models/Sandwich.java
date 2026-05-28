@@ -8,32 +8,34 @@ public class Sandwich extends OrderableItem {
     private SandwichSize size;
     private BreadType bread;
     private final ArrayList<Topping> toppings;
-    private final ArrayList<Topping> extraToppings;
 
 
     public Sandwich(String name, SandwichSize size){
         super("Sandwich", name);
         this.size = size;
         toppings = new ArrayList<>();
-        extraToppings = new ArrayList<>();
+    }
+    public Sandwich(String name, SandwichSize size, BreadType bread, boolean isToasted, ArrayList<Topping> toppings){
+        super("Sandwich", name);
+        this.size = size;
+        this.bread = bread;
+        this.isToasted = isToasted;
+        this.toppings = toppings;
     }
 
     @Override
     public double getTotalPrice(){
         double runningTotal = size.getPrice();
         for (Topping topping: toppings){
-            runningTotal += topping.getPrice(size);
+            if (topping.getName().contains("extra")){
+                runningTotal += topping.getExtraPrice(size);
+            }
+            else {
+                runningTotal += topping.getPrice(size);
+            }
         }
-        for (Topping topping: extraToppings){
-            runningTotal += topping.getExtraPrice(size);
-        }
+
         return runningTotal;
-    }
-    public ArrayList<Topping> getAllToppings(){
-        ArrayList<Topping> allToppings = new ArrayList<>();
-        allToppings.addAll(toppings);
-        allToppings.addAll(extraToppings);
-        return allToppings;
     }
 
     public ArrayList<Topping> getToppings() {
@@ -42,12 +44,7 @@ public class Sandwich extends OrderableItem {
     public void addTopping(Topping topping){
         toppings.add(topping);
     }
-    public void addExtraTopping(Topping topping){
-        extraToppings.add(topping);
-    }
-    public void removeExtraTopping(Topping topping){
-        extraToppings.remove(topping);
-    }
+
     public void removeTopping(Topping topping){
         toppings.remove(topping);
     }

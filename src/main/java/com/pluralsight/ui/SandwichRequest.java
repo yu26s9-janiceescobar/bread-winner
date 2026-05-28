@@ -12,12 +12,20 @@ public class SandwichRequest {
     public SandwichRequest(Console console){
         this.console = console;
     }
-    public ArrayList<Topping> requestToppings(SandwichSize size, ToppingCategory type){
-        String name;
+    public ArrayList<Topping> requestAllToppings(SandwichSize size){
+        ArrayList<Topping> allToppings = new ArrayList<>();
+        allToppings.addAll(requestToppings(size, ToppingCategory.MEAT));
+        allToppings.addAll(requestToppings(size, ToppingCategory.CHEESE));
+        allToppings.addAll(requestToppings(size, ToppingCategory.REGULAR_TOPPING));
+        allToppings.addAll(requestToppings(size, ToppingCategory.SAUCE));
+        allToppings.addAll(requestToppings(size, ToppingCategory.SIDE));
+        return allToppings;
+    }
+    private ArrayList<Topping> requestToppings(SandwichSize size, ToppingCategory type){
         ArrayList<String> availableTopping = new ArrayList<>(Arrays.asList(type.getNames()));
         ArrayList<Topping> addedToppings = new ArrayList<>();
-        do{
-            name = getSelection(availableTopping, type.getPrice(size));
+        while(!availableTopping.isEmpty()){
+            String name = getSelection(availableTopping, type.getPrice(size));
             if (name == null) {
                 break;
             }
@@ -28,7 +36,7 @@ public class SandwichRequest {
                 addedToppings.add(new Topping(type, "Extra " + name));
             }
             availableTopping.remove(name);
-        }while (!availableTopping.isEmpty());
+        }
         return addedToppings;
     }
 

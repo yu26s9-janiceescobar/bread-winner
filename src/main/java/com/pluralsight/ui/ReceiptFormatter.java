@@ -25,7 +25,7 @@ public class ReceiptFormatter {
                         sandwich.getBread().getLabel(),
                         sandwich.isToasted() ? "Yes" : "No"));
 
-                List<Topping> toppings = new ArrayList<>(sandwich.getAllToppings());
+                List<Topping> toppings = new ArrayList<>(sandwich.getToppings());
                 toppings.sort(Comparator.comparing(Topping::getCategory) // sort categories together
                         .thenComparing(t -> t.getName().startsWith("Extra") ? 1 : 0) // normal toppings before "extra" toppings.
                         .thenComparing(Topping::getName)); // sort topping alphabetically
