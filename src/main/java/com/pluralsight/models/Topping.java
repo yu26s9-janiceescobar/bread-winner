@@ -16,12 +16,7 @@ public class Topping implements MenuItem {
     }
 
     public double getExtraPrice(SandwichSize size){
-        if (category == ToppingCategory.MEAT)
-            return category.getPrice(size) * 0.5;
-        if (category == ToppingCategory.CHEESE){
-            return category.getPrice(size) * 0.4;
-        }
-        return 0;
+        return category.getExtraPrice(size);
     }
 
     @Override

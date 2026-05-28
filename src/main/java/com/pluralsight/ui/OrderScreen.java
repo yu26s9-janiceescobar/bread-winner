@@ -1,8 +1,9 @@
 package com.pluralsight.ui;
 import com.pluralsight.business.Order;
+import com.pluralsight.business.SandwichFactory;
 import com.pluralsight.data.ReceiptFileManager;
 import com.pluralsight.models.*;
-import com.pluralsight.models.enums.SodaSize;
+import com.pluralsight.models.enums.*;
 
 import java.util.ArrayList;
 
@@ -21,12 +22,12 @@ public class OrderScreen {
             int option;
             do {
                 System.out.println("""
-                    Order Screen
-                    [1] Add Sandwich
-                    [2] Add Drink
-                    [3] Add Chips
-                    [4] Checkout
-                    [0] Cancel Order""");
+                    \t\tOrder Screen
+                    \t[1] Add Sandwich
+                    \t[2] Add Drink
+                    \t[3] Add Chips
+                    \t[4] Checkout
+                    \t[0] Cancel Order""");
                 option = console.promptForIntRange("> ", 0, 4);
                 switch (option) {
                     case 0:
@@ -49,9 +50,38 @@ public class OrderScreen {
     }
 
     private void processAddSandwich(){
-        SandwichScreen sandwichScreen = new SandwichScreen(console);
-        Sandwich sandwich = sandwichScreen.buildSandwich();
-        order.addToOrder(sandwich);
+        System.out.println("""
+                \t\tSandwich Screen
+                \t[1] Custom Sandwich
+                \t[2] Speciality Sandwich
+                \t[3] Cancel
+                """);
+        int option = console.promptForIntRange("> ",0, 3);
+        switch(option){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 0:
+                System.out.println("Cancelling Sandwich Order...");
+                break;
+        }
+        int option = console.promptForIntRange("> ",1, 3);
+        getSpecialitySandwich();
+        SandwichRequest request = new SandwichRequest(console);
+        SandwichSize size = request.requestSandwichSize();
+        BreadType bread = request.requestBread();
+        boolean isToasted = request.requestIsToasted();
+        ArrayList<Topping> allToppings = new ArrayList<>();
+        allToppings.addAll(request.requestToppings(size, ToppingCategory.MEAT));
+        allToppings.addAll(request.requestToppings(size, ToppingCategory.CHEESE));
+        allToppings.addAll(request.requestToppings(size, ToppingCategory.REGULAR_TOPPING));
+        allToppings.addAll(request.requestToppings(size, ToppingCategory.SAUCE));
+        allToppings.addAll(request.requestToppings(size, ToppingCategory.SIDE));
+        allToppings.addAll(request.requestToppings(size, ToppingCategory.MEAT));
+
     }
     private void processAddSoda(){
         SodaSize sodaSize = getSodaSize();
@@ -84,7 +114,7 @@ public class OrderScreen {
         System.out.println(orderSummary);
         String option;
         do {
-            option = console.promptForStringOptions("[C] Confirm [E] Edit [X] Cancel Order");
+            option = console.promptForStringOptions("[C] Confirm [E] Edit [X] Cancel Order", "c", "e","x");
             switch (option.toLowerCase()) {
                 case "c":
                     receiptFileManager.saveReceipt(orderSummary);
@@ -100,6 +130,14 @@ public class OrderScreen {
 
 
 
+    }
+    private SpecialitySandwich getSpecialitySandwich(){
+        SpecialitySandwich[] type = SpecialitySandwich.values();
+        for (int i = 0; i < type.length; i++){
+            System.out.printf("[%d] %s%n", i + 1, type[i].getLabel());
+        }
+        int choice = console.promptForIntRange("Choose Size\n> " , 1, type.length);
+        return type[choice - 1];
     }
     private SodaSize getSodaSize(){
         SodaSize[] sizes = SodaSize.values();

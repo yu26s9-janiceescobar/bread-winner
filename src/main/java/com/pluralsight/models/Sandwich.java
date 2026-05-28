@@ -11,10 +11,9 @@ public class Sandwich extends OrderableItem {
     private final ArrayList<Topping> extraToppings;
 
 
-    public Sandwich(String category, String name, SandwichSize size, BreadType bread){
-        super(category, name);
+    public Sandwich(String name, SandwichSize size){
+        super("Sandwich", name);
         this.size = size;
-        this.bread = bread;
         toppings = new ArrayList<>();
         extraToppings = new ArrayList<>();
     }

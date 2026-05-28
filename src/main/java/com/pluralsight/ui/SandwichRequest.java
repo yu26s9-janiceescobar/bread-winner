@@ -3,48 +3,39 @@ import com.pluralsight.models.*;
 import com.pluralsight.models.enums.BreadType;
 import com.pluralsight.models.enums.SandwichSize;
 import com.pluralsight.models.enums.ToppingCategory;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class SandwichScreen {
+public class SandwichRequest {
     private final Console console;
-    public SandwichScreen(Console console){
+    public SandwichRequest(Console console){
         this.console = console;
     }
-
-    public Sandwich buildSandwich(){
-        Sandwich sandwich = new Sandwich("Sandwich", "Custom", getSandwichSize(), getBread());
-        sandwich.setToasted(console.promptForYesNo("Toast bread? [Y] Yes [N] No\n> "));
-        addTopping(sandwich, ToppingCategory.MEAT);
-        addTopping(sandwich, ToppingCategory.CHEESE);
-        addTopping(sandwich, ToppingCategory.REGULAR_TOPPING);
-        addTopping(sandwich, ToppingCategory.SAUCE);
-        addTopping(sandwich, ToppingCategory.SIDE);
-        return sandwich;
-    }
-
-    private void addTopping(Sandwich sandwich, ToppingCategory type){
+    public ArrayList<Topping> requestToppings(SandwichSize size, ToppingCategory type){
         String name;
         ArrayList<String> availableTopping = new ArrayList<>(Arrays.asList(type.getNames()));
+        ArrayList<Topping> addedToppings = new ArrayList<>();
         do{
-            name = getSelection(availableTopping, type.getPrice(sandwich.getSize()));
+            name = getSelection(availableTopping, type.getPrice(size));
             if (name == null) {
                 break;
             }
-            Topping topping = new Topping(type, name);
-            sandwich.addTopping(topping);
-            System.out.printf("Would you like to add extra %s? (Price: $%.2f)%n[Y] Yes [N] No%n", name, topping.getExtraPrice(sandwich.getSize()));
+
+            addedToppings.add(new Topping(type, name) );
+            System.out.printf("Would you like to add extra %s? (Price: $%.2f)%n[Y] Yes [N] No%n", name, type.getExtraPrice(size));
             if (console.promptForYesNo("> ")) {
-                sandwich.addExtraTopping(new Topping(type, "Extra " + name));
+                addedToppings.add(new Topping(type, "Extra " + name));
             }
             availableTopping.remove(name);
         }while (!availableTopping.isEmpty());
+        return addedToppings;
     }
 
-
-    private BreadType getBread(){
+    public boolean requestIsToasted(){
+        return console.promptForYesNo("Toast Bread? [Y] Yes [N] No ");
+    }
+    public BreadType requestBread(){
         BreadType[] sizes = BreadType.values();
         System.out.println("\tBread Selection");
         for (int i = 0; i < sizes.length; i++){
@@ -59,16 +50,16 @@ public class SandwichScreen {
         for (int i = 0; i < selection.size(); i++){
             System.out.printf("[%d] %s ---- $%.2f%n", i + 1, selection.get(i), price);
         }
-        System.out.printf("[%d] Skip%n", selection.size() + 1);
-        int choice = console.promptForIntRange("> " , 1, selection.size() + 1);
-        if (choice == selection.size() + 1){
+        System.out.println("[0] Skip");
+        int choice = console.promptForIntRange("> " , 0, selection.size());
+        if (choice == 0){
             return null;
         }
         return selection.get(choice - 1);
     }
 
 
-    private SandwichSize getSandwichSize(){
+    public SandwichSize requestSandwichSize(){
         SandwichSize[] sizes = SandwichSize.values();
         System.out.println("\tSize Selection");
         for (int i = 0; i < sizes.length; i++){

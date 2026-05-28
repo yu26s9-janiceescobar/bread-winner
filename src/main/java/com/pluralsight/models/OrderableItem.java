@@ -7,7 +7,6 @@ public abstract class OrderableItem implements MenuItem{
         this.category = category;
         this.name = name;
     }
-
     @Override
     public String getCategory() {
         return category;
@@ -17,7 +16,6 @@ public abstract class OrderableItem implements MenuItem{
     public String getName() {
         return name;
     }
-
 
     public abstract double getTotalPrice();
 }
