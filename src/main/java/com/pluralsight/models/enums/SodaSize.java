@@ -1,4 +1,4 @@
-package com.pluralsight.models;
+package com.pluralsight.models.enums;
 
 public enum SodaSize {
     SMALL("Small Soda", 2.0),

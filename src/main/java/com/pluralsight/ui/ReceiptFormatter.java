@@ -12,7 +12,7 @@ public class ReceiptFormatter {
         StringBuilder stringBuilder = new StringBuilder();
         List<OrderableItem> formattedOrder = new ArrayList<>(order.getOrder());
         formattedOrder.sort(Comparator.comparingInt(item -> item instanceof Sandwich ? 0 : 1));
-        stringBuilder.append(String.format("%25s%n","Order Summary"));
+        stringBuilder.append(String.format("%27s %n %25s %n %s %n %25s %n","Order Summary", "Bread Winner", "85 Broad Street, New York, NY 10004", "123-456-7890"));
         stringBuilder.repeat("=", 50);
 
         for (OrderableItem item: formattedOrder){
@@ -43,17 +43,18 @@ public class ReceiptFormatter {
                         stringBuilder.append(String.format("%10s %-25s %10s%n",
                                isExtra ? "+ " : " ",
                                t.getName(),
-                               price == 0 ? "FREE" : String.format("$%.2f", price)));
+                               price == 0 ? "FREE" : String.format("$ %.2f", price)));
                     }
-                stringBuilder.repeat("-", 50);
+                    stringBuilder.repeat("-", 50);
+
             }
             if (item instanceof Chips || item instanceof Soda){
 
-                stringBuilder.append(String.format("%-10s - %-25s $%.2f%n", item.getCategory().toUpperCase(), item.getName(), item.getTotalPrice()));
+                stringBuilder.append(String.format("%n%-10s %n %-37s $ %.2f%n", item.getCategory().toUpperCase(), item.getName(), item.getTotalPrice()));
             }
         }
         stringBuilder.repeat("-",50);
-        stringBuilder.append(String.format("%-40s $%,.2f %n", "TOTAL PRICE:",order.getTotalPrice()));
+        stringBuilder.append(String.format("%n%-38s $ %,.2f %n", "TOTAL PRICE:",order.getTotalPrice()));
         return stringBuilder.toString();
     }
 }

@@ -1,7 +1,7 @@
 package com.pluralsight.models;
+import com.pluralsight.models.enums.BreadType;
+import com.pluralsight.models.enums.SandwichSize;
 import java.util.ArrayList;
-
-
 
 public class Sandwich extends OrderableItem {
     private boolean isToasted;

@@ -1,5 +1,8 @@
 package com.pluralsight.models;
 
+import com.pluralsight.models.enums.SandwichSize;
+import com.pluralsight.models.enums.ToppingCategory;
+
 public class Topping implements MenuItem {
     private final String name;
     private final ToppingCategory category;

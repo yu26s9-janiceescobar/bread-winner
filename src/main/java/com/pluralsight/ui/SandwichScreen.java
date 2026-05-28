@@ -1,5 +1,9 @@
 package com.pluralsight.ui;
 import com.pluralsight.models.*;
+import com.pluralsight.models.enums.BreadType;
+import com.pluralsight.models.enums.SandwichSize;
+import com.pluralsight.models.enums.ToppingCategory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 

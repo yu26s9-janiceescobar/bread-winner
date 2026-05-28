@@ -1,16 +1,20 @@
 package com.pluralsight.ui;
 import com.pluralsight.business.Order;
+import com.pluralsight.data.ReceiptFileManager;
 import com.pluralsight.models.*;
+import com.pluralsight.models.enums.SodaSize;
 
 import java.util.ArrayList;
 
 public class OrderScreen {
     private final Console console;
     private final Order order;
-
+    private final ReceiptFileManager receiptFileManager;
+;
     public OrderScreen(Console console){
         this.console = console;
         order = new Order();
+        receiptFileManager = new ReceiptFileManager();
 
     }
     public void startNewOrder(){
@@ -76,8 +80,24 @@ public class OrderScreen {
             System.out.println("You must order a soda or chips to check out.");
             return;
         }
-        System.out.println(ReceiptFormatter.format(order));
-        console.promptForYesNo("[C] Confirm [E] Edit [ ")
+        String orderSummary = ReceiptFormatter.format(order);
+        System.out.println(orderSummary);
+        String option;
+        do {
+            option = console.promptForStringOptions("[C] Confirm [E] Edit [X] Cancel Order");
+            switch (option.toLowerCase()) {
+                case "c":
+                    receiptFileManager.saveReceipt(orderSummary);
+                    break;
+                case "e":
+                    //
+                    break;
+                case "x":
+                    System.out.println("Cancelling Order...");
+                    break;
+            }
+        }while(option.equalsIgnoreCase("e"));
+
 
 
     }

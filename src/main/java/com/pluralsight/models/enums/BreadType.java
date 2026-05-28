@@ -1,4 +1,4 @@
-package com.pluralsight.models;
+package com.pluralsight.models.enums;
 
 public enum BreadType {
     WHITE("White"),
@@ -12,5 +12,5 @@ public enum BreadType {
     public String getLabel() {
         return label;
     }
-    
+
 }

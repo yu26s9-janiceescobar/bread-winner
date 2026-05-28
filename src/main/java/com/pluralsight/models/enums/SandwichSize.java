@@ -1,4 +1,4 @@
-package com.pluralsight.models;
+package com.pluralsight.models.enums;
 
 public enum SandwichSize {
     FOUR_INCH("4 Inch", 5.5),

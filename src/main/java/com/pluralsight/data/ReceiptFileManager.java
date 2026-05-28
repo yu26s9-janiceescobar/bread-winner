@@ -11,12 +11,13 @@ import java.time.format.DateTimeFormatter;
 
 // yyyyMMdd-hhmmss.txt - i.e. 20230329-121523.txt)
 public class ReceiptFileManager {
-
-    private final String FOLDER_NAME;
+    private final Path parentFolder;
+    private final Path receiptPath;
     public ReceiptFileManager(){
-        FOLDER_NAME = "receipts";
         try {
-            Files.createDirectories(Path.of(FOLDER_NAME));
+            parentFolder = Path.of("data");
+            receiptPath = parentFolder.resolve("receipts");
+            Files.createDirectories(receiptPath);
         } catch (IOException e) {
             throw new RuntimeException("Trouble creating folder.", e);
         }
@@ -24,12 +25,14 @@ public class ReceiptFileManager {
 
     /**
      * Takes finalized order, formats it and saves it to folder as a txt file with date and time stamp.
-     * @param order the checked out order.
+     * @param contents String the formatted details of finalized order.
      */
-    public void saveReceipt(Order order){
-        String fileName = FOLDER_NAME + "/" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")) + ".txt";
-        try(PrintWriter printWriter = new PrintWriter(fileName)){
-            printWriter.print(ReceiptFormatter.format(order));
+    public void saveReceipt(String contents){
+        try{
+            Path receiptFile = receiptPath.resolve(
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"))
+                            + ".txt");
+            Files.writeString(receiptFile, contents);
         } catch (IOException e) {
             throw new RuntimeException("Trouble writing new receipt.", e);
         }
