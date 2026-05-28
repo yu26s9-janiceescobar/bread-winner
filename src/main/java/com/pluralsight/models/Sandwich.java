@@ -6,12 +6,12 @@ import java.util.ArrayList;
 public class Sandwich extends OrderableItem {
     private boolean isToasted;
     private SandwichSize size;
-    private String bread;
+    private BreadType bread;
     private final ArrayList<Topping> toppings;
     private final ArrayList<Topping> extraToppings;
 
 
-    public Sandwich(String category, String name, SandwichSize size, String bread){
+    public Sandwich(String category, String name, SandwichSize size, BreadType bread){
         super(category, name);
         this.size = size;
         this.bread = bread;
@@ -46,10 +46,10 @@ public class Sandwich extends OrderableItem {
     public void removeTopping(Topping topping){
         toppings.remove(topping);
     }
-    public void setBread(String bread){
+    public void setBread(BreadType bread){
         this.bread = bread;
     }
-    public String getBread(){
+    public BreadType getBread(){
         return bread;
     }
     public void setSize(SandwichSize size){

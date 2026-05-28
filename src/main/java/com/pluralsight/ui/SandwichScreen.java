@@ -2,84 +2,124 @@ package com.pluralsight.ui;
 
 import com.pluralsight.models.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class SandwichScreen {
     private final Console console;
-    private final static String[] sandwichSize = {"4 inch", "8 inch", "12 inch"}
-    private static final String[] meats = {"steak", "ham", "salami", "roast beef", "chicken", "bacon"};
-    private static final String[] cheeses = {"american", "provolone", "cheddar", "swiss"};
-    private static final String[] breads = {"white", "wheat", "rye", "wrap"};
-    private static final String[] regularToppings = {"lettuce", "peppers", "onions", "tomatoes", "jalapeños", "cucumbers", "pickles", "guacamole", "mushrooms"};
-    private static final String[] sauces = {"mayo", "mustard", "ketchup", "ranch", "thousand islands", "vinaigrette"};
-    private static final String[] sides = {"au jus", "sauce"};
     public SandwichScreen(Console console){
         this.console = console;
     }
 
     public Sandwich buildSandwich(){
         Sandwich sandwich;
-        String size = selectOption(sandwichSize, "Select Sandwich Size: ");
-        String bread = selectOption(breads, "Select bread: ");
-        sandwich = new Sandwich("Sandwich", "Custom", size, bread);
+        sandwich = new Sandwich("Sandwich", "Custom", getSandwichSize(), getBread());
         sandwich.setToasted(console.promptForYesNo("Toast bread? [Y] Yes [N] No"));
         addMeat(sandwich);
         addCheese(sandwich);
-        addRegTopping(sandwich, regularToppings, "regular topping");
-        addRegTopping(sandwich, sauces, "sauce");
-        addRegTopping(sandwich, sides, "sides");
+        addRegularTopping(sandwich);
+        addSauce(sandwich);
+        addSide(sandwich);
         return sandwich;
     }
-
-    private void addRegTopping(Sandwich sandwich, String[] selection, String category){
-        boolean addToSandwich;
-        int maxToppings = 0;
-        do {
-            String selectedTopping = selectOption(selection, category);
-            sandwich.addTopping(new RegularTopping(selectedTopping));
-            addToSandwich = console.promptForYesNo("Add another " + category + " [Y] yes [N] no\n");
-            maxToppings++;
-        }while(addToSandwich && maxToppings < selection.length);
-    }
-
     private void addMeat(Sandwich sandwich){
-        String selectedMeat = selectOption(meats,"Select Meat: ");
-        MenuItemFactory.createMenuItem("Meat", "topping", selectedMeat, );
-        double basePrice = Menu.meat().getBasePrice();
-        double extraPrice = meat.getExtraPrice(sandwich.getSize());
-        System.out.printf("Price: $%.2f Additional Cost: $%.2f %n", basePrice, extraPrice);
-        sandwich.addTopping(meat);
-        if (console.promptForYesNo("Extra Meat: [Y] Yes [N] No")){
-            sandwich.addTopping(new Meat(selectedMeat, true));
-        }
+        String name;
+        ArrayList<String> availableMeats = new ArrayList<>(Arrays.asList(ToppingCategory.MEAT.getNames()));
+        do {
+            name = getSelection(availableMeats);
+            if (name == null) {
+                break;
+            }
+            sandwich.addTopping(new Topping(ToppingCategory.MEAT, name));
+            if (console.promptForYesNo("Would you like to add extra " + name + "\n> ")) {
+                sandwich.addExtraTopping(new Topping(ToppingCategory.MEAT, "Extra " + name));
+            }
+            availableMeats.remove(name);
+        }while(!availableMeats.isEmpty());
     }
-
-
     private void addCheese(Sandwich sandwich){
-        String selectedCheese = selectOption(cheeses, "Select Cheese: ");
-        PremiumTopping cheese = new Cheese(selectedCheese, false);
-        double basePrice = cheese.getBasePrice(sandwich.getSize());
-        double extraPrice = cheese.getExtraPrice(sandwich.getSize());
-        System.out.printf("Price: $%.2f Additional Cost: $%.2f %n", basePrice, extraPrice);
-        sandwich.addTopping(cheese);
-        if (console.promptForYesNo("Extra Cheese: [Y] Yes [N] No")){
-            sandwich.addTopping(new Cheese(selectedCheese, true));
+        String name;
+        ArrayList<String> availableCheese = new ArrayList<>(Arrays.asList(ToppingCategory.CHEESE.getNames()));
+        do {
+            name = getSelection(availableCheese);
+            if (name == null) {
+                break;
+            }
+            sandwich.addTopping(new Topping(ToppingCategory.CHEESE, name));
+            if (console.promptForYesNo("Would you like to add extra " + name + "\n> ")) {
+                sandwich.addExtraTopping(new Topping(ToppingCategory.CHEESE, "Extra " + name));
+            }
+            availableCheese.remove(name);
+        }while(!availableCheese.isEmpty());
+    }
+    private void addRegularTopping(Sandwich sandwich){
+        while(true) {
+            String name = getSelection(ToppingCategory.REGULAR_TOPPING.getNames());
+            if (name == null){
+                break;
+            }
+            sandwich.addTopping(new Topping(ToppingCategory.REGULAR_TOPPING, name));
         }
     }
+    private void addSauce(Sandwich sandwich){
+        while(true) {
+            String name = getSelection(ToppingCategory.SAUCE.getNames());
+            if (name == null){
+                break;
+            }
+            sandwich.addTopping(new Topping(ToppingCategory.SAUCE, name));
+        }
+    }
+    private void addSide(Sandwich sandwich){
+        while(true) {
+            String name = getSelection(ToppingCategory.SIDE.getNames());
+            if (name == null) {
+                break;
+            }
+            sandwich.addTopping(new Topping(ToppingCategory.SIDE, name));
+        }
+    }
+    private BreadType getBread(){
+        BreadType[] sizes = BreadType.values();
+        for (int i = 0; i < sizes.length; i++){
+            System.out.printf("[%d] %s%n", i + 1, sizes[i].getLabel());
+        }
+        int choice = console.promptForIntRange("Choose Bread%n> " , 1, sizes.length);
+        return sizes[choice - 1];
+    }
 
-
-
-    private String selectOption(String[] selection, String prompt){
+    private String getSelection(ArrayList<String> selection){
+        for (int i = 0; i < selection.size(); i++){
+            System.out.printf("[%d] %s%n", i + 1, selection.get(i));
+        }
+        System.out.printf("[%d] Skip", selection.size());
+        System.out.println("Which one would you like to add?");
+        int choice = console.promptForIntRange("> " , 1, selection.size() + 1);
+        if (choice == selection.size()){
+            return null;
+        }
+        return selection.get(choice - 1);
+    }
+    private String getSelection(String[] selection){
         for (int i = 0; i < selection.length; i++){
             System.out.printf("[%d] %s%n", i + 1, selection[i]);
         }
-        int choice = console.promptForIntRange(prompt, 1, selection.length);
+        System.out.printf("[%d] Skip", selection.length);
+        System.out.println("Which one would you like to add?");
+        int choice = console.promptForIntRange("> " , 1, selection.length + 1);
+        if (choice == selection.length){
+            return null;
+        }
         return selection[choice - 1];
     }
 
-    private String getSandwichSize(){
+
+
+    private SandwichSize getSandwichSize(){
         SandwichSize[] sizes = SandwichSize.values();
         for (int i = 0; i < sizes.length; i++){
-            System.out.printf("[%d] %s%n", i + 1, sizes[i].getInches());
+            System.out.printf("[%d] %s%n", i + 1, sizes[i].getLabel());
         }
         int choice = console.promptForIntRange("Choose Size%n> " , 1, sizes.length);
         return sizes[choice - 1];

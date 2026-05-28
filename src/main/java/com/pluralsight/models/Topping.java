@@ -3,6 +3,7 @@ package com.pluralsight.models;
 public class Topping implements MenuItem {
     private final String name;
     private final ToppingCategory category;
+
     public Topping(ToppingCategory category, String name){
         this.category = category;
         this.name = name;
