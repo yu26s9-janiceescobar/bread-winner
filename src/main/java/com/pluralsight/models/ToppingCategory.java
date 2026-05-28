@@ -2,11 +2,11 @@ package com.pluralsight.models;
 
 public enum ToppingCategory {
 
-    MEAT("Meat", 1.0, 2.0, 3.0, new String[]{"steak", "ham", "salami", "roast beef", "chicken", "bacon"}),
-    CHEESE("Cheese", .75, 1.5, 2.25, new String[]{"american", "provolone", "cheddar", "swiss"}),
-    REGULAR_TOPPING("Regular Topping", 0, 0, 0, new String[] {"lettuce", "peppers", "onions", "tomatoes", "jalapeños", "cucumbers", "pickles", "guacamole", "mushrooms"}),
-    SIDE("Side", 0,0,0, new String[] {"au jus", "sauce"}),
-    SAUCE("Sauce",0,0,0, new String[] {"mayo", "mustard", "ketchup", "ranch", "thousand islands", "vinaigrette"});
+    MEAT("Meat", 1.0, 2.0, 3.0, new String[]{"Steak", "Ham", "Salami", "Roast Beef", "Chicken", "Bacon"}),
+    CHEESE("Cheese", .75, 1.5, 2.25, new String[]{"American", "Provolone", "Cheddar", "Swiss"}),
+    REGULAR_TOPPING("Regular Topping", 0, 0, 0, new String[] {"Lettuce", "Peppers", "Onions", "Tomatoes", "Jalapeños", "Cucumbers", "Pickles", "Guacamole", "Mushrooms"}),
+    SIDE("Side", 0,0,0, new String[] {"Au Jus", "Sauce"}),
+    SAUCE("Sauce",0,0,0, new String[] {"Mayo", "Mustard", "Ketchup", "Ranch", "Thousand Islands", "Vinaigrette"});
 
     private final String category;
     private final double smallPrice;

@@ -30,6 +30,12 @@ public class Sandwich extends OrderableItem {
         }
         return runningTotal;
     }
+    public ArrayList<Topping> getAllToppings(){
+        ArrayList<Topping> allToppings = new ArrayList<>();
+        allToppings.addAll(toppings);
+        allToppings.addAll(extraToppings);
+        return allToppings;
+    }
 
     public ArrayList<Topping> getToppings() {
         return toppings;

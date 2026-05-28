@@ -1,9 +1,9 @@
 package com.pluralsight.models;
 
 public enum SandwichSize {
-    FOUR_INCH("4 inch", 5.5),
-    EIGHT_INCH("8 inch", 7.0),
-    TWELVE_INCH("12 inch", 8.5);
+    FOUR_INCH("4 Inch", 5.5),
+    EIGHT_INCH("8 Inch", 7.0),
+    TWELVE_INCH("12 Inch", 8.5);
 
 
     private final String label;

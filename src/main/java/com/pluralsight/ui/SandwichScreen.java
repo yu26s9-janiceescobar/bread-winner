@@ -1,7 +1,5 @@
 package com.pluralsight.ui;
-
 import com.pluralsight.models.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,9 +11,8 @@ public class SandwichScreen {
     }
 
     public Sandwich buildSandwich(){
-        Sandwich sandwich;
-        sandwich = new Sandwich("Sandwich", "Custom", getSandwichSize(), getBread());
-        sandwich.setToasted(console.promptForYesNo("Toast bread? [Y] Yes [N] No"));
+        Sandwich sandwich = new Sandwich("Sandwich", "Custom", getSandwichSize(), getBread());
+        sandwich.setToasted(console.promptForYesNo("Toast bread? [Y] Yes [N] No\n> "));
         addTopping(sandwich, ToppingCategory.MEAT);
         addTopping(sandwich, ToppingCategory.CHEESE);
         addTopping(sandwich, ToppingCategory.REGULAR_TOPPING);
@@ -23,40 +20,44 @@ public class SandwichScreen {
         addTopping(sandwich, ToppingCategory.SIDE);
         return sandwich;
     }
+
     private void addTopping(Sandwich sandwich, ToppingCategory type){
         String name;
         ArrayList<String> availableTopping = new ArrayList<>(Arrays.asList(type.getNames()));
         do{
-            name = getSelection(availableTopping);
+            name = getSelection(availableTopping, type.getPrice(sandwich.getSize()));
             if (name == null) {
                 break;
             }
-            sandwich.addTopping(new Topping(type, name));
-            if (console.promptForYesNo("Would you like to add extra " + name + "\n> ")) {
+            Topping topping = new Topping(type, name);
+            sandwich.addTopping(topping);
+            System.out.printf("Would you like to add extra %s? (Price: $%.2f)%n[Y] Yes [N] No%n", name, topping.getExtraPrice(sandwich.getSize()));
+            if (console.promptForYesNo("> ")) {
                 sandwich.addExtraTopping(new Topping(type, "Extra " + name));
             }
             availableTopping.remove(name);
         }while (!availableTopping.isEmpty());
     }
-    
+
 
     private BreadType getBread(){
         BreadType[] sizes = BreadType.values();
+        System.out.println("\tBread Selection");
         for (int i = 0; i < sizes.length; i++){
-            System.out.printf("[%d] %s%n", i + 1, sizes[i].getLabel());
+            System.out.printf("[%d] %s\n", i + 1, sizes[i].getLabel());
         }
-        int choice = console.promptForIntRange("Choose Bread%n> " , 1, sizes.length);
+        int choice = console.promptForIntRange("> " , 1, sizes.length);
         return sizes[choice - 1];
     }
 
-    private String getSelection(ArrayList<String> selection){
-        for (int i = 0; i < selection.size(); i++){
-            System.out.printf("[%d] %s%n", i + 1, selection.get(i));
-        }
-        System.out.printf("[%d] Skip", selection.size());
+    private String getSelection(ArrayList<String> selection, double price){
         System.out.println("Which one would you like to add?");
+        for (int i = 0; i < selection.size(); i++){
+            System.out.printf("[%d] %s ---- $%.2f%n", i + 1, selection.get(i), price);
+        }
+        System.out.printf("[%d] Skip%n", selection.size() + 1);
         int choice = console.promptForIntRange("> " , 1, selection.size() + 1);
-        if (choice == selection.size()){
+        if (choice == selection.size() + 1){
             return null;
         }
         return selection.get(choice - 1);
@@ -65,10 +66,11 @@ public class SandwichScreen {
 
     private SandwichSize getSandwichSize(){
         SandwichSize[] sizes = SandwichSize.values();
+        System.out.println("\tSize Selection");
         for (int i = 0; i < sizes.length; i++){
-            System.out.printf("[%d] %s%n", i + 1, sizes[i].getLabel());
+            System.out.printf("[%d] %s ---- $%,.2f%n", i + 1, sizes[i].getLabel(), sizes[i].getPrice());
         }
-        int choice = console.promptForIntRange("Choose Size%n> " , 1, sizes.length);
+        int choice = console.promptForIntRange("> " , 1, sizes.length);
         return sizes[choice - 1];
 
     }
