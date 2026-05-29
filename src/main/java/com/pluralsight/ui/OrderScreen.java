@@ -110,6 +110,7 @@ public class OrderScreen {
                     copy.setBread(request.requestBread());
                     break;
                 case 3:
+                    copy.getToppings().clear();
                     copy.addMultipleToppings(request.requestToppings(copy));
                     break;
                 case 4:
@@ -215,6 +216,7 @@ public class OrderScreen {
                     LocalDateTime dateTime = LocalDateTime.now();
                     receiptFileManager.saveReceipt(ReceiptFormatter.format(order, dateTime), dateTime);
                     System.out.println("You have successfully checked out.");
+                    order.getOrder().clear();
                     isDone = true;
                     break;
                 case "e":
@@ -222,6 +224,7 @@ public class OrderScreen {
                     break;
                 case "x":
                     System.out.println("Cancelling Order...");
+                    order.getOrder().clear();
                     isDone = true;
                     break;
             }

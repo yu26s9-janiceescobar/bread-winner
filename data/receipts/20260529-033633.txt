@@ -1,0 +1,24 @@
+               Order Summary 
+               Bread Winner 
+ 85 Broad Street, New York, NY 10004 
+               123-456-7890 
+          May 29, 2026 3:36 AM 
+==================================================
+Sandwich - BLT (8 Inch - $ 7.00)
+	Bread: White
+	Toasted: Yes
+
+    CHEESE: 
+           Cheddar                       $ 1.50
+      MEAT: 
+           Bacon                         $ 2.00
+           Turkey                        $ 2.00
+        +  Turkey                        $ 1.00
+REGULAR TOPPING: 
+           Lettuce                         FREE
+           Tomato                          FREE
+     SAUCE: 
+           Ranch                           FREE
+-------------------------------------------------- 
+--------------------------------------------------
+TOTAL PRICE:                           $ 13.50 
