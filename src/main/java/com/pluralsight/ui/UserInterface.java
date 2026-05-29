@@ -9,7 +9,7 @@ public class UserInterface {
         int option;
         do {
             System.out.println("""
-                \t\tBread Winner Shop
+                \t\tBread Winner
                 \t[1] New Order
                 \t[0] Exit""");
             option = console.promptForIntRange("> ", 0, 1);

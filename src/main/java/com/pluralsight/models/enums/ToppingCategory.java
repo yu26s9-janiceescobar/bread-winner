@@ -4,7 +4,7 @@ public enum ToppingCategory {
 
     MEAT("Meat",
             1.0, 2.0, 3.0, 0.5,
-            new String[]{"Steak", "Ham", "Salami", "Roast Beef", "Chicken", "Bacon"}),
+            new String[]{"Steak", "Ham", "Salami", "Roast Beef", "Chicken", "Bacon", "Turkey"}),
 
     CHEESE("Cheese",
             .75, 1.5, 2.25, 0.4,

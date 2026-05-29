@@ -6,18 +6,22 @@ import com.pluralsight.models.enums.ToppingCategory;
 public class Topping implements MenuItem {
     private final String name;
     private final ToppingCategory category;
+    private final boolean isExtra;
 
-    public Topping(ToppingCategory category, String name){
+    public Topping(ToppingCategory category, String name, boolean isExtra){
         this.category = category;
         this.name = name;
-    }
-    public double getPrice(SandwichSize size){
-        return category.getPrice(size);
+        this.isExtra = isExtra;
     }
 
-    public double getExtraPrice(SandwichSize size){
-        return category.getExtraPrice(size);
+    public boolean isExtra() {
+        return isExtra;
     }
+
+    public double getPrice(SandwichSize size){
+        return isExtra ? category.getExtraPrice(size) : category.getPrice(size);
+    }
+
 
     @Override
     public String getName() {
@@ -27,5 +31,8 @@ public class Topping implements MenuItem {
     @Override
     public String getCategory() {
         return category.getCategory();
+    }
+    public ToppingCategory getCategoryEnum(){
+        return category;
     }
 }

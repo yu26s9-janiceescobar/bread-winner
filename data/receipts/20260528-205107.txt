@@ -1,0 +1,24 @@
+              Order Summary 
+              Bread Winner 
+ 85 Broad Street, New York, NY 10004 
+              123-456-7890 
+==================================================
+Sandwich - Custom (4 Inch)
+	Bread: Wrap
+Toasted: No
+
+    CHEESE: 
+           American                      $ 0.75
+      MEAT: 
+           Salami                        $ 1.00
+        +  Salami                        $ 0.50
+     SAUCE: 
+           Ranch                           FREE
+      SIDE: 
+           Au Jus                          FREE
+        +  Au Jus                          FREE
+--------------------------------------------------
+SMALL SODA 
+ Pepsi                                 $ 2.00
+--------------------------------------------------
+TOTAL PRICE:                           $ 9.75 

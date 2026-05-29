@@ -17,5 +17,13 @@ public abstract class OrderableItem implements MenuItem{
         return name;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public abstract double getTotalPrice();
 }

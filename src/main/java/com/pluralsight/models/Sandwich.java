@@ -10,9 +10,10 @@ public class Sandwich extends OrderableItem {
     private final ArrayList<Topping> toppings;
 
 
-    public Sandwich(String name, SandwichSize size){
+    public Sandwich(String name, SandwichSize size, boolean isToasted){
         super("Sandwich", name);
         this.size = size;
+        this.isToasted = isToasted;
         toppings = new ArrayList<>();
     }
     public Sandwich(String name, SandwichSize size, BreadType bread, boolean isToasted, ArrayList<Topping> toppings){
@@ -23,23 +24,21 @@ public class Sandwich extends OrderableItem {
         this.toppings = toppings;
     }
 
+
     @Override
     public double getTotalPrice(){
         double runningTotal = size.getPrice();
-        for (Topping topping: toppings){
-            if (topping.getName().contains("extra")){
-                runningTotal += topping.getExtraPrice(size);
-            }
-            else {
-                runningTotal += topping.getPrice(size);
-            }
+        for (Topping topping: toppings) {
+            runningTotal += topping.getPrice(size);
         }
-
         return runningTotal;
     }
 
     public ArrayList<Topping> getToppings() {
         return toppings;
+    }
+    public void addMultipleToppings(ArrayList<Topping> toppings){
+        this.toppings.addAll(toppings);
     }
     public void addTopping(Topping topping){
         toppings.add(topping);
