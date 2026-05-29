@@ -1,9 +1,5 @@
 package com.pluralsight.data;
-import com.pluralsight.business.Order;
-import com.pluralsight.ui.ReceiptFormatter;
-
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -27,11 +23,11 @@ public class ReceiptFileManager {
      * Takes finalized order, formats it and saves it to folder as a txt file with date and time stamp.
      * @param contents String the formatted details of finalized order.
      */
-    public void saveReceipt(String contents){
+    public void saveReceipt(String contents, LocalDateTime dateTime){
+        String date = dateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss"));
         try{
             Path receiptFile = receiptPath.resolve(
-                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"))
-                            + ".txt");
+                    date + ".txt");
             Files.writeString(receiptFile, contents);
         } catch (IOException e) {
             throw new RuntimeException("Trouble writing new receipt.", e);

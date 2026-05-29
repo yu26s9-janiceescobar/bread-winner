@@ -8,7 +8,14 @@ import com.pluralsight.models.enums.ToppingCategory;
 
 
 public class SandwichFactory {
-
+    /**
+     * Creates a speciality sandwich with preloaded topping and bread type selection
+     * based on the speciality sandwich user has selected.
+     * @param type the type of speciality sandwich user has selected.
+     * @param size the size of the sandwich user has selected.
+     * @param isToasted true if user has selected to toast their bread, or false if user has selected to not toast their bread.
+     * @return the speciality sandwich user has selected.
+     */
     public static Sandwich create(SpecialitySandwich type, SandwichSize size, boolean isToasted){
         return switch(type){
             case SpecialitySandwich.BLT -> createBLT(type, size, isToasted);

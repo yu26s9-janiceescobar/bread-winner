@@ -5,6 +5,8 @@ import com.pluralsight.data.ReceiptFileManager;
 import com.pluralsight.models.*;
 import com.pluralsight.models.enums.*;
 
+import java.time.LocalDateTime;
+
 import java.util.ArrayList;
 
 public class OrderScreen {
@@ -134,7 +136,7 @@ public class OrderScreen {
                     soda.setSize(getSodaSize());
                     break;
                 case 2:
-                    soda.setName(getSelection(Soda.FLAVORS, soda.getTotalPrice()));
+                    soda.setName(promptForSelection(Soda.FLAVORS, soda.getTotalPrice()));
                     break;
                 case 3:
                     System.out.println("You have successfully updated your soda.");
@@ -163,7 +165,7 @@ public class OrderScreen {
             option = console.promptForIntRange("> ", 0, 2);
             switch(option){
                 case 1:
-                    chips.setName(getSelection(Chips.FLAVORS, chips.getTotalPrice()));
+                    chips.setName(promptForSelection(Chips.FLAVORS, chips.getTotalPrice()));
                     break;
                 case 2:
                     System.out.println("You have successfully updated chips.");
@@ -187,17 +189,19 @@ public class OrderScreen {
         String option;
         boolean isDone = false;
         do {
-            String orderSummary = ReceiptFormatter.format(order);
+            String orderSummary = ReceiptFormatter.format(order, LocalDateTime.now());
             System.out.println(orderSummary);
             option = console.promptForStringOptions("[C] Confirm [E] Edit [X] Cancel Order\n> ", "c", "e","x");
             switch (option.toLowerCase()) {
                 case "c":
-                    receiptFileManager.saveReceipt(orderSummary);
+                    LocalDateTime dateTime = LocalDateTime.now();
+                    receiptFileManager.saveReceipt(ReceiptFormatter.format(order, dateTime), dateTime);
                     System.out.println("You have successfully checked out.");
+
                     isDone = true;
                     break;
                 case "e":
-                    editOrder();
+                    processEditOrder();
                     break;
                 case "x":
                     System.out.println("Cancelling Order...");
@@ -239,7 +243,7 @@ public class OrderScreen {
      */
     private void processAddSoda(){
         SodaSize sodaSize = getSodaSize();
-        String name = getSelection(Soda.FLAVORS, sodaSize.getPrice());
+        String name = promptForSelection(Soda.FLAVORS, sodaSize.getPrice());
         if (name != null) {
             Soda soda = new Soda(sodaSize.getLabel(), name, sodaSize);
             order.addToOrder(soda);
@@ -251,7 +255,7 @@ public class OrderScreen {
      * Allows user to select chips flavor and adds it to order.
      */
     private void processAddChips(){
-        String name = getSelection(Chips.FLAVORS, Chips.PRICE);
+        String name = promptForSelection(Chips.FLAVORS, Chips.PRICE);
         if (name != null) {
             Chips chips = new Chips("Chips", name);
             order.addToOrder(chips);
@@ -259,8 +263,10 @@ public class OrderScreen {
         }
     }
 
-
-    private void editOrder(){
+    /**
+     * Checks to see the type of item user has selected to order.
+     */
+    private void processEditOrder(){
         OrderableItem item = getEditOrderSelection();
         if (item instanceof Sandwich){
             editSandwich((Sandwich) item);
@@ -272,6 +278,11 @@ public class OrderScreen {
             editChips((Chips) item);
         }
     }
+
+    /**
+     * Prompts user to select order item they wish to edit.
+     * @return the order item user has selected to edit.
+     */
     private OrderableItem getEditOrderSelection(){
         ArrayList<OrderableItem> items = order.getOrder();
         System.out.println("""
@@ -282,6 +293,11 @@ public class OrderScreen {
         int choice = console.promptForIntRange("> " , 1, items.size());
         return items.get(choice - 1);
     }
+
+    /**
+     * Displays and prompts user to select a speciality sandwich.
+     * @return the speciality sandwich user has selected.
+     */
     private SpecialitySandwich getSpecialitySandwich(){
         System.out.println("\t\tSpeciality Sandwich");
         SpecialitySandwich[] type = SpecialitySandwich.values();
@@ -291,6 +307,11 @@ public class OrderScreen {
         int choice = console.promptForIntRange("> " , 1, type.length);
         return type[choice - 1];
     }
+
+    /**
+     * Prompts user to select soda size.
+     * @return the size of the soda user has selected.
+     */
     private SodaSize getSodaSize(){
         SodaSize[] sizes = SodaSize.values();
         System.out.println("\t\tSize Selection");
@@ -301,7 +322,14 @@ public class OrderScreen {
         return sizes[choice - 1];
 
     }
-    private String getSelection(String[] selection, double price){
+
+    /**
+     * displays a list of options and prices and prompts user to select an option.
+     * @param selection the list of options for user to select from.
+     * @param price the price of options.
+     * @return String the option user has selected.
+     */
+    private String promptForSelection(String[] selection, double price){
         System.out.printf("Which one would you like to add? %nPrice: $ %.2f %n", price);
         for (int i = 0; i < selection.length; i++){
             System.out.printf("[%d] %s ", i + 1, selection[i]);

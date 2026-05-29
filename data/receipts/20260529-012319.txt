@@ -1,0 +1,49 @@
+               Order Summary 
+               Bread Winner 
+ 85 Broad Street, New York, NY 10004 
+               123-456-7890 
+          May 29, 2026 1:23 AM 
+==================================================
+Sandwich - Custom (4 Inch - $ 5.50)
+	Bread: White
+	Toasted: Yes
+
+    CHEESE: 
+           American                      $ 0.75
+      MEAT: 
+           Ham                           $ 1.00
+           Salami                        $ 1.00
+        +  Ham                           $ 0.50
+        +  Salami                        $ 0.50
+REGULAR TOPPING: 
+           Peppers                         FREE
+     SAUCE: 
+           Mayo                            FREE
+           Mustard                         FREE
+        +  Mustard                         FREE
+      SIDE: 
+           Au Jus                          FREE
+        +  Au Jus                          FREE
+--------------------------------------------------
+Sandwich - BLT (12 Inch - $ 8.50)
+	Bread: White
+	Toasted: No
+
+    CHEESE: 
+           Cheddar                       $ 2.25
+      MEAT: 
+           Bacon                         $ 3.00
+REGULAR TOPPING: 
+           Lettuce                         FREE
+           Tomato                          FREE
+     SAUCE: 
+           Ranch                           FREE
+--------------------------------------------------
+SMALL SODA 
+ Pepsi                                 $ 2.00
+
+CHIPS      
+ Sour Cream & Onion                    $ 1.50
+ 
+--------------------------------------------------
+TOTAL PRICE:                           $ 26.50 
