@@ -7,6 +7,7 @@ public class Chips extends OrderableItem {
         super(category, name);
 
     }
+
     @Override
     public double getTotalPrice(){
         return PRICE;

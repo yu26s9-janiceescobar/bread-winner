@@ -13,6 +13,11 @@ public class Topping implements MenuItem {
         this.name = name;
         this.isExtra = isExtra;
     }
+    public Topping(Topping other){
+        this.category = other.category;
+        this.name = other.name;
+        this.isExtra = other.isExtra;
+    }
 
     public boolean isExtra() {
         return isExtra;

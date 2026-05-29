@@ -83,10 +83,17 @@ public class OrderScreen {
                 break;
         }
     }
+
+    /**
+     * Prompts user to select what Sandwich ingredient they want to edit,
+     * including size, bread, topping.
+     * @param sandwich the current sandwich item being modified.
+     */
     private void editSandwich(Sandwich sandwich){
         int option;
+        Sandwich copy = new Sandwich(sandwich);
         boolean isDone = false;
-        do {
+        while(!isDone){
             System.out.println("""
                      \t\tEdit Sandwich
                      \t[1] Size
@@ -97,23 +104,26 @@ public class OrderScreen {
             option = console.promptForIntRange("> ", 0, 4);
             switch(option){
                 case 1:
-                    sandwich.setSize(request.requestSandwichSize());
+                    copy.setSize(request.requestSandwichSize());
                     break;
                 case 2:
-                    sandwich.setBread(request.requestBread());
+                    copy.setBread(request.requestBread());
                     break;
                 case 3:
-                    sandwich.addMultipleToppings(request.requestToppings(sandwich));
+                    copy.addMultipleToppings(request.requestToppings(copy));
                     break;
                 case 4:
+                    order.removeFromOrder(sandwich);
+                    order.addToOrder(copy);
                     System.out.println("You have successfully updated your sandwich.");
                     isDone = true;
                     break;
                 case 0:
+                    System.out.println("Changes discared.");
                     isDone = true;
                     break;
             }
-        }while(!isDone);
+        }
     }
     /**
      * Allows user to edit soda from current order.
@@ -122,7 +132,8 @@ public class OrderScreen {
     private void editSoda(Soda soda){
         int option;
         boolean isDone = false;
-        do {
+        Soda copy = new Soda(soda);
+        while(!isDone){
             System.out.println("""
                      \t\tEdit Soda
                      \t[1] Size
@@ -133,20 +144,23 @@ public class OrderScreen {
             option = console.promptForIntRange("> ", 0, 3);
             switch(option){
                 case 1:
-                    soda.setSize(getSodaSize());
+                    copy.setSize(getSodaSize());
                     break;
                 case 2:
-                    soda.setName(promptForSelection(Soda.FLAVORS, soda.getTotalPrice()));
+                    copy.setName(promptForSelection(Soda.FLAVORS, copy.getTotalPrice()));
                     break;
                 case 3:
+                    order.removeFromOrder(soda);
+                    order.addToOrder(copy);
                     System.out.println("You have successfully updated your soda.");
                     isDone = true;
                     break;
                 case 0:
+                    System.out.println("Changes discared.");
                     isDone = true;
                     break;
             }
-        }while(!isDone);
+        }
     }
     /**
      * Allows user to edit chips from current order.
@@ -155,7 +169,8 @@ public class OrderScreen {
     private void editChips(Chips chips){
         int option;
         boolean isDone = false;
-        do {
+        Chips copy = new Chips(chips.getCategory(), chips.getName());
+        while(!isDone){
             System.out.println("""
                      \t\tEdit Chips
                      \t[1] Flavor
@@ -165,17 +180,20 @@ public class OrderScreen {
             option = console.promptForIntRange("> ", 0, 2);
             switch(option){
                 case 1:
-                    chips.setName(promptForSelection(Chips.FLAVORS, chips.getTotalPrice()));
+                    copy.setName(promptForSelection(Chips.FLAVORS, copy.getTotalPrice()));
                     break;
                 case 2:
+                    order.removeFromOrder(chips);
+                    order.addToOrder(copy);
                     System.out.println("You have successfully updated chips.");
                     isDone = true;
                     break;
                 case 0:
+                    System.out.println("Changes discared.");
                     isDone = true;
                     break;
             }
-        }while(!isDone);
+        };
     }
     /**
      * Allows user to see order summary and either confirm, edit, or cancel current order.
@@ -188,7 +206,7 @@ public class OrderScreen {
         }
         String option;
         boolean isDone = false;
-        do {
+        while(!isDone){
             String orderSummary = ReceiptFormatter.format(order, LocalDateTime.now());
             System.out.println(orderSummary);
             option = console.promptForStringOptions("[C] Confirm [E] Edit [X] Cancel Order\n> ", "c", "e","x");
@@ -197,7 +215,6 @@ public class OrderScreen {
                     LocalDateTime dateTime = LocalDateTime.now();
                     receiptFileManager.saveReceipt(ReceiptFormatter.format(order, dateTime), dateTime);
                     System.out.println("You have successfully checked out.");
-
                     isDone = true;
                     break;
                 case "e":
@@ -208,7 +225,7 @@ public class OrderScreen {
                     isDone = true;
                     break;
             }
-        }while(!isDone);
+        }
     }
 
 

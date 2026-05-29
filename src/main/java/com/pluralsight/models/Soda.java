@@ -9,6 +9,10 @@ public class Soda extends OrderableItem {
         super(category, name);
         this.size = size;
     }
+    public Soda(Soda other){
+        super(other.getCategory(), other.getName());
+        this.size = other.size;
+    }
     @Override
     public double getTotalPrice(){
         return size.getPrice();

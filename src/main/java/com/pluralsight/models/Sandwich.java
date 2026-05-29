@@ -23,7 +23,18 @@ public class Sandwich extends OrderableItem {
         this.isToasted = isToasted;
         this.toppings = toppings;
     }
-
+    // java allows private access between instances of the same class.
+    // constructor used to make copies
+    public Sandwich(Sandwich other){
+        super("Sandwich", other.getName());
+        this.size = other.size;
+        this.bread = other.bread;
+        this.isToasted = other.isToasted;
+        this.toppings = new ArrayList<>();
+        for (Topping t : other.toppings){
+            this.toppings.add(new Topping(t));
+        }
+    }
 
     @Override
     public double getTotalPrice(){
